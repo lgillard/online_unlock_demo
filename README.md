@@ -1,24 +1,8 @@
 # online_unlock
 
-## Project setup
-```
-npm install
-```
+## Development context
+This project goal is to practice VueJS and web socket use.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Project description
+### Goal
+The project should allowed remote people to play unlock game demo together. I think this webside can be interresting during the covid19 and lockdown period.
