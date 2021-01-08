@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <main>
-      <Board/>
+      <Board :socket="socket"/>
     </main>
     <Footer/>
   </div>
@@ -32,10 +32,6 @@ export default {
   -webkit-font-smoothing:  antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align:              center;
-}
-
-main
-{
 }
 
 .grab

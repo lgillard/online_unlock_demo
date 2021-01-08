@@ -4,13 +4,19 @@
        :style="draggable ? getXYStyle : ''"
        alt="Start card"
        class="card-size grab ml-5 mr-5"
-       @click="returnAllowed ? returnCard() : emitCardClickEvent()"/>
+       @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
 </template>
 
 <script>
 export default {
   name:        'Card', props: {
-    draggable: { default: true }, returnAllowed: { default: true }, x: { default: 100 }, y: { default: 100 }, scenario: { default: 'demo' }, name: { default: 'start' },
+    socket:        { required: true },
+    draggable:     { default: true },
+    returnAllowed: { default: true },
+    x:             { default: 100 },
+    y:             { default: 100 },
+    scenario:      { default: 'demo' },
+    name:          { default: 'start' },
   }, data()
   {
     return { isBack: true };
@@ -26,19 +32,24 @@ export default {
       return 'left: ' + this.x + 'px;' + 'top: ' + this.y + 'px; position: absolute';
     },
   }, methods:  {
-    emitCardClickEvent()
+    emitCardClickEvent(e)
     {
+      e.preventDefault();
       this.$emit('cardClicked');
     }, _getImgUrl(imgName)
     {
       return '/assets/gameList/' + this.scenario + '/' + imgName + '.JPG';
-    }, returnCard()
+    }, returnCard(e)
     {
-      if (this.returnAllowed)
-      {
-        this.isBack = !this.isBack;
-      }
+      e.preventDefault();
+      this.socket.emit('CARD_RETURNED', { name: this.name, isBack: !this.isBack });
     },
+  }, mounted()
+  {
+    this.socket.on('CARD_RETURNED_' + this.name, isBack =>
+    {
+      this.isBack = isBack;
+    });
   },
 };
 </script>

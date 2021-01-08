@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card :x="x" :y="y"/>
+    <Card :socket="socket" :x="x" :y="y"/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import Card from '@/components/game/Card';
 
 export default {
-  name:       'Board', components: { Card }, created()
+  name:       'Board', components: { Card }, props: { socket: { required: true } }, created()
   {
     this._initDragAndDropListeners();
   }, data()

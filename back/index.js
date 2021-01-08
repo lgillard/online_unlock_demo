@@ -7,13 +7,17 @@ const server = app.listen(3001, function()
 	console.log('server running on port 3001');
 });
 
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+	cors: {
+		origin: '*',
+	},
+});
 
 io.on('connection', function(socket)
 {
-	console.log(socket.id);
-	socket.on('CARD_RETURNED', function(data)
+	socket.on('CARD_RETURNED', function({ name, isBack })
 	{
-		io.emit('CARD_UPD', data);
+		console.log(name, isBack, socket.id);
+		io.emit('CARD_RETURNED_' + name, isBack);
 	});
 });
