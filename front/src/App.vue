@@ -12,10 +12,14 @@
 import Footer from '@/components/Footer';
 import Board  from '@/components/game/Board';
 import Header from '@/components/Header';
+import io     from 'socket.io-client';
 
 export default {
   name: 'App', components: {
     Board, Footer, Header,
+  }, data()
+  {
+    return { socket: io('localhost:3001') };
   },
 };
 </script>
