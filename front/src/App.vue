@@ -3,7 +3,7 @@
     <Header/>
     <main>
       <SearchCardsModal :cards="pick" :socket="socket"/>
-      <Board :socket="socket"/>
+      <Board :cards="board" :socket="socket"/>
     </main>
     <Footer/>
   </div>

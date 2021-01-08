@@ -43,24 +43,30 @@ export default {
       this.socket.emit('CARD_RETURNED', { name: this.card.name, isBack: !this.card.isBack });
     }, _initDragAndDropListeners()
     {
-      // let cardDraggedId;
+      let cardDraggedId;
 
-      // document.addEventListener('dragstart', (event) =>
-      // {
-      //   // store a ref. on the dragged elem
-      //   cardDraggedId = event.target.attributes['id'].value;
-      // }, false);
+      document.addEventListener('dragstart', (event) =>
+      {
+        // store a ref. on the dragged elem
+        cardDraggedId = event.target.attributes['id'].value;
+      }, false);
 
       /* events fired on the drop targets */
       document.addEventListener('dragover', (event) =>
       {
-        this._updXYcardPosition(event);
+        if (cardDraggedId === this.card.name)
+        {
+          this._updXYcardPosition(event);
+        }
       }, false);
 
       document.addEventListener('drop', (event) =>
       {
-        this._updXYcardPosition(event);
-        // TODO: emit websocket event
+        if (cardDraggedId === this.card.name)
+        {
+          this._updXYcardPosition(event);
+          // TODO: emit websocket event
+        }
       }, false);
     }, _updXYcardPosition(event)
     {

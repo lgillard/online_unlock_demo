@@ -33,7 +33,7 @@ export default {
       this.currentCardIndex = (this.currentCardIndex + 1) % (this.cards.length - 1);
     }, cardAddOnBoard()
     {
-      // TODO emit websocket event
+      this.socket.emit('CARD_FROM_PICK_TO_BOARD', this.currentCard.name);
     },
   },
 };

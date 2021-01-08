@@ -38,6 +38,22 @@ io.on('connection', function(socket)
 	{
 		cardsOnPick = cards;
 	});
+
+	socket.on('CARD_FROM_PICK_TO_BOARD', cardName =>
+	{
+		// TODO: improve => change array to key/value array
+		for (let key = 0; key < cardsOnPick.length; key ++)
+		{
+			if (cardName === cardsOnPick[key].name)
+			{
+				cardsOnBoard.push(cardsOnPick[key]);
+				cardsOnPick.splice(key, 1);
+
+				io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+				return;
+			}
+		}
+	});
 });
 
 const hasBeenInit = function()

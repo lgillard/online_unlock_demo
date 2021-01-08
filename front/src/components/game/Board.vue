@@ -16,7 +16,6 @@ export default {
 div
 {
   height:           150vh;
-  width:            150vw;
   background-color: antiquewhite;
 }
 </style>
