@@ -1,5 +1,10 @@
 <template>
-  <img :id="name" :src="isBack ? backImgSrc : imgSrc" :style="draggable ? getXYStyle : ''" alt="Start card" class="card-size grab ml-5 mr-5" @click="returnCard()"/>
+  <img :id="name"
+       :src="isBack ? backImgSrc : imgSrc"
+       :style="draggable ? getXYStyle : ''"
+       alt="Start card"
+       class="card-size grab ml-5 mr-5"
+       @click="returnAllowed ? returnCard() : emitCardClickEvent()"/>
 </template>
 
 <script>
@@ -21,7 +26,10 @@ export default {
       return 'left: ' + this.x + 'px;' + 'top: ' + this.y + 'px; position: absolute';
     },
   }, methods:  {
-    _getImgUrl(imgName)
+    emitCardClickEvent()
+    {
+      this.$emit('cardClicked');
+    }, _getImgUrl(imgName)
     {
       return '/assets/gameList/' + this.scenario + '/' + imgName + '.JPG';
     }, returnCard()
