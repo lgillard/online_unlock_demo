@@ -14,9 +14,10 @@
 
         <!-- Right part -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item>
+          <b-nav-item v-b-modal.search-cards-modal>
             <b-icon-search class="mr-3"/>
             <div class="d-inline">Rechercher une carte</div>
+            <SearchCardsModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -25,8 +26,10 @@
 </template>
 
 <script>
+import SearchCardsModal from '@/components/searchCards/SearchCardsModal';
+
 export default {
-  name: 'Header',
+  name: 'Header', components: { SearchCardsModal },
 };
 </script>
 

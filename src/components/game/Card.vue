@@ -1,11 +1,11 @@
 <template>
-  <img :id="name" :src="isBack ? backImgSrc : imgSrc" :style="getXYStyle" alt="Start card" class="card-size grab" @click="returnCard()"/>
+  <img :id="name" :src="isBack ? backImgSrc : imgSrc" :style="draggable ? getXYStyle : ''" alt="Start card" class="card-size grab" @click="returnCard()"/>
 </template>
 
 <script>
 export default {
   name:        'Card', props: {
-    returnAllowed: { default: true }, x: { default: 100 }, y: { default: 100 }, scenario: { default: 'demo' }, name: { default: 'start' },
+    draggable: { default: true }, returnAllowed: { default: true }, x: { default: 100 }, y: { default: 100 }, scenario: { default: 'demo' }, name: { default: 'start' },
   }, data()
   {
     return { isBack: true };
@@ -18,7 +18,7 @@ export default {
       return this._getImgUrl(this.name);
     }, getXYStyle()
     {
-      return 'left: ' + this.x + 'px;' + 'top: ' + this.y + 'px;';
+      return 'left: ' + this.x + 'px;' + 'top: ' + this.y + 'px; position: absolute';
     },
   }, methods:  {
     _getImgUrl(imgName)
@@ -36,14 +36,8 @@ export default {
 </script>
 
 <style scoped>
-img
-{
-  position: absolute;
-}
-
 .card-size
 {
   height: 450px;
-  width:  270px;
 }
 </style>
