@@ -1,7 +1,7 @@
 <template>
   <b-modal id="search-cards-modal" size="xl">
     <h2>Rechercher une carte</h2>
-    <Pick/>
+    <Pick :cards="cards" :socket="socket"/>
   </b-modal>
 </template>
 
@@ -10,7 +10,9 @@
 import Pick from '@/components/searchCards/Pick';
 
 export default {
-  name: 'SearchCardsModal', components: { Pick },
+  name: 'SearchCardsModal', components: { Pick }, props: {
+    cards: { default: [] }, socket: { required: true },
+  },
 };
 </script>
 

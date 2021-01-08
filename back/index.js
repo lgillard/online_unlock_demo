@@ -13,11 +13,34 @@ const io = require('socket.io')(server, {
 	},
 });
 
+var cardsOnBoard   = [];
+var cardsOnPick    = [];
+var cardsOnDiscard = [];
+
 io.on('connection', function(socket)
 {
+	if (!hasBeenInit())
+	{
+		// TODO: found a better way, this code smells ...
+		socket.emit('CARD_INIT_REQUIRED');
+	}
+	else
+	{
+		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+	}
+
 	socket.on('CARD_RETURNED', function({ name, isBack })
 	{
-		console.log(name, isBack, socket.id);
 		io.emit('CARD_RETURNED_' + name, isBack);
 	});
+
+	socket.on('INIT_STACK', cards =>
+	{
+		cardsOnPick = cards;
+	});
 });
+
+const hasBeenInit = function()
+{
+	return cardsOnBoard.length + cardsOnPick.length + cardsOnDiscard.length > 0;
+};

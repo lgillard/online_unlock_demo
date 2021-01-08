@@ -2,6 +2,7 @@
   <div id="app">
     <Header/>
     <main>
+      <SearchCardsModal :cards="this.pick" :socket="socket"/>
       <Board :socket="socket"/>
     </main>
     <Footer/>
@@ -9,17 +10,36 @@
 </template>
 
 <script>
-import Footer from '@/components/Footer';
-import Board  from '@/components/game/Board';
-import Header from '@/components/Header';
-import io     from 'socket.io-client';
+import Footer           from '@/components/Footer';
+import Board            from '@/components/game/Board';
+import Header           from '@/components/Header';
+import SearchCardsModal from '@/components/searchCards/SearchCardsModal';
+import io               from 'socket.io-client';
 
 export default {
   name: 'App', components: {
-    Board, Footer, Header,
+    SearchCardsModal, Board, Footer, Header,
   }, data()
   {
-    return { socket: io('localhost:3001') };
+    return { socket: io('localhost:3001'), discard: { default: [] }, pick: { default: [] }, board: { default: [] } };
+  }, mounted()
+  {
+    this.socket.on('CARD_INIT_REQUIRED', () =>
+    {
+      // TODO: explore scenario imgs to populate array
+      this.pick = ['69',
+                   '42',
+                   '46',
+                   '11',
+                   '48',
+                   '16',
+                   '35',
+                   '25',
+                   '16',
+                   'start'];
+      this.socket.emit('INIT_STACK', this.pick);
+      console.log(this.pick);
+    });
   },
 };
 </script>
