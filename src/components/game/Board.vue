@@ -36,6 +36,7 @@ export default {
       document.addEventListener('drop', (event) =>
       {
         this._updXYcardPosition(event);
+        // TODO: emit websocket event
       }, false);
     }, _updXYcardPosition(event)
     {
