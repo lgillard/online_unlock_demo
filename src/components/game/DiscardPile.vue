@@ -1,5 +1,5 @@
 <template>
-  <b-card class="discard card-size" text-variant="secondary" title="Défausse">
+  <b-card class="discard" text-variant="secondary" title="Défausse">
     <b-card-text class="mt-5">
       <b-icon-trash class="trash"/>
     </b-card-text>
@@ -18,6 +18,8 @@ export default {
   background-color: #f7f7f7;
   border-style:     dashed;
   border-width:     thick;
+  height:           450px;
+  width:            270px;
 }
 
 .trash

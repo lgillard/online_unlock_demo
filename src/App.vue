@@ -34,12 +34,6 @@ main
 {
 }
 
-.card-size
-{
-  height: 450px;
-  width:  270px;
-}
-
 .grab
 {
   cursor: grab;
