@@ -2,7 +2,7 @@
   <div id="app">
     <Header/>
     <main>
-      <SearchCardsModal :cards="this.pick" :socket="socket"/>
+      <SearchCardsModal :cards="pick" :socket="socket"/>
       <Board :socket="socket"/>
     </main>
     <Footer/>
@@ -21,29 +21,29 @@ export default {
     SearchCardsModal, Board, Footer, Header,
   }, data()
   {
-    return { socket: io('localhost:3001'), discard: { default: [] }, pick: { default: [] }, board: { default: [] } };
+    return { socket: io('localhost:3001'), discard: { default: () => [] }, pick: { default: () => [] }, board: { default: () => [] } };
   }, mounted()
   {
     this.socket.on('CARD_INIT_REQUIRED', () =>
     {
       // TODO: explore scenario imgs to populate array
-      this.pick = ['69',
-                   '42',
-                   '46',
-                   '11',
-                   '48',
-                   '16',
-                   '35',
-                   '25',
-                   '16',
-                   'start'];
+      this.pick = [{ x: 100, y: 100, name: 'start', isBack: true },
+                   { x: 100, y: 100, name: '69', isBack: true },
+                   { x: 100, y: 100, name: '42', isBack: true },
+                   { x: 100, y: 100, name: '46', isBack: true },
+                   { x: 100, y: 100, name: '16', isBack: true },
+                   { x: 100, y: 100, name: '35', isBack: true },
+                   { x: 100, y: 100, name: '25', isBack: true },
+                   { x: 100, y: 100, name: '48', isBack: true },
+                   { x: 100, y: 100, name: '69', isBack: true },
+                   { x: 100, y: 100, name: '11', isBack: true }];
       this.socket.emit('INIT_STACK', this.pick);
     });
-    this.socket.on('CARD_STACKS', ({ cardsOnBoard, cardsOnPick, cardsOnDiscard }) =>
+    this.socket.on('CARD_STACKS', data =>
     {
-      this.discard = cardsOnDiscard;
-      this.board   = cardsOnBoard;
-      this.pick    = cardsOnPick;
+      this.board   = data.cardsOnBoard;
+      this.pick    = data.cardsOnPick;
+      this.discard = data.cardsOnDiscard;
     });
   },
 };

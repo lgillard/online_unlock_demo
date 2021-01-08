@@ -11,7 +11,7 @@ import Pick from '@/components/searchCards/Pick';
 
 export default {
   name: 'SearchCardsModal', components: { Pick }, props: {
-    cards: { default: [] }, socket: { required: true },
+    cards: { default: () => [] }, socket: { required: true },
   },
 };
 </script>
