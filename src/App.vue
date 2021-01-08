@@ -2,20 +2,20 @@
   <div id="app">
     <Header/>
     <main>
-      <Card/>
+      <Board/>
     </main>
     <Footer/>
   </div>
 </template>
 
 <script>
-import Card   from '@/./components/game/Card';
 import Footer from '@/components/Footer';
+import Board  from '@/components/game/Board';
 import Header from '@/components/Header';
 
 export default {
   name: 'App', components: {
-    Card, Footer, Header,
+    Board, Footer, Header,
   },
 };
 </script>
@@ -32,7 +32,6 @@ export default {
 
 main
 {
-  padding: 10vh;
 }
 
 .card-size
