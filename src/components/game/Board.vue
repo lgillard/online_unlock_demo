@@ -1,5 +1,5 @@
 <template>
-  <div class="dropzone">
+  <div>
     <Card :x="x" :y="y"/>
   </div>
 </template>
@@ -14,40 +14,37 @@ export default {
   }, data()
   {
     return {
-      x: 100, y: 100,
+      x: 100, y: 100, cardHeight: 450, cardWidth: 270,
     };
   }, methods: {
     _initDragAndDropListeners()
     {
-      let cardDraggedId;
+      // let cardDraggedId;
 
-      document.addEventListener('dragstart', (event) =>
-      {
-        // store a ref. on the dragged elem
-        cardDraggedId = event.target.attributes['id'].value;
-      }, false);
+      // document.addEventListener('dragstart', (event) =>
+      // {
+      //   // store a ref. on the dragged elem
+      //   cardDraggedId = event.target.attributes['id'].value;
+      // }, false);
 
       /* events fired on the drop targets */
       document.addEventListener('dragover', (event) =>
       {
-        // prevent default to allow drop
-        event.preventDefault();
+        this._updXYcardPosition(event);
       }, false);
 
       document.addEventListener('drop', (event) =>
       {
-        // prevent default action (open as link for some elements)
-        event.preventDefault();
-
-        // move dragged elem to the selected drop target
-        if (event.target.className.indexOf('dropzone') >= 0)
-        {
-          // eslint-disable-next-line no-debugger
-          console.log(event.x, event.y, cardDraggedId);
-          this.x = event.x;
-          this.y = event.y;
-        }
+        this._updXYcardPosition(event);
       }, false);
+    }, _updXYcardPosition(event)
+    {
+      // prevent default to allow drop
+      event.preventDefault();
+
+      // move dragged elem to the selected drop target
+      this.x = event.x + window.scrollX - this.cardWidth / 2;
+      this.y = event.y + window.scrollY - this.cardHeight / 2;
     },
   },
 };

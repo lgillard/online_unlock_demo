@@ -40,4 +40,10 @@ img
 {
   position: absolute;
 }
+
+.card-size
+{
+  height: 450px;
+  width:  270px;
+}
 </style>
