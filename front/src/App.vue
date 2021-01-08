@@ -38,7 +38,12 @@ export default {
                    '16',
                    'start'];
       this.socket.emit('INIT_STACK', this.pick);
-      console.log(this.pick);
+    });
+    this.socket.on('CARD_STACKS', ({ cardsOnBoard, cardsOnPick, cardsOnDiscard }) =>
+    {
+      this.discard = cardsOnDiscard;
+      this.board   = cardsOnBoard;
+      this.pick    = cardsOnPick;
     });
   },
 };
