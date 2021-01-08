@@ -1,5 +1,5 @@
 <template>
-  <img :id="name" :src="isBack ? backImgSrc : imgSrc" :style="draggable ? getXYStyle : ''" alt="Start card" class="card-size grab" @click="returnCard()"/>
+  <img :id="name" :src="isBack ? backImgSrc : imgSrc" :style="draggable ? getXYStyle : ''" alt="Start card" class="card-size grab ml-5 mr-5" @click="returnCard()"/>
 </template>
 
 <script>
