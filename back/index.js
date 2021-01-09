@@ -64,18 +64,19 @@ io.on('connection', function(socket)
 		}
 	});
 
-	socket.on('CARD_MOVED', ({ name, x, y, isBack }) =>
+	socket.on('CARD_MOVED', ({ name, x, y, isBack, position }) =>
 	{
 		for (const card of cardsOnBoard)
 		{
 			if (card.name === name)
 			{
-				card.x      = x;
-				card.y      = y;
-				card.isBack = isBack;
+				card.x        = x;
+				card.y        = y;
+				card.isBack   = isBack;
+				card.position = cardsOnBoard.length;
 
+				io.emit('CARD_GO_FRONT', { name, position });
 				io.emit('CARD_' + name + '_MOVED', card);
-				return;
 			}
 		}
 	});

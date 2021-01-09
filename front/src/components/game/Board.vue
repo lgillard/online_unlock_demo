@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card v-for="card of cards" :key="card.name" :card="card" :socket="socket"/>
+    <Card v-for="card of cards" :key="card.name" :card="card" :nbTotalCards="cards.length" :socket="socket"/>
   </div>
 </template>
 
