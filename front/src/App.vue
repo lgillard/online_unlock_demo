@@ -21,7 +21,7 @@ export default {
     SearchCardsModal, Board, Footer, Header,
   }, data()
   {
-    return { socket: io('localhost:3001'), discard: { default: () => [] }, pick: { default: () => [] }, board: { default: () => [] } };
+    return { socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] } };
   }, mounted()
   {
     this.socket.on('CARD_INIT_REQUIRED', () =>
@@ -41,9 +41,8 @@ export default {
     });
     this.socket.on('CARD_STACKS', data =>
     {
-      this.board   = data.cardsOnBoard;
-      this.pick    = data.cardsOnPick;
-      this.discard = data.cardsOnDiscard;
+      this.board = data.cardsOnBoard;
+      this.pick  = data.cardsOnPick;
     });
   },
 };
