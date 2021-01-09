@@ -65,7 +65,7 @@ export default {
         if (cardDraggedId === this.card.name)
         {
           this._updXYcardPosition(event);
-          // TODO: emit websocket event
+          this.socket.emit('CARD_MOVED', this.card);
         }
       }, false);
     }, _updXYcardPosition(event)
@@ -82,6 +82,10 @@ export default {
     this.socket.on('CARD_RETURNED_' + this.card.name, isBack =>
     {
       this.card.isBack = isBack;
+    });
+    this.socket.on('CARD_' + this.card.name + '_MOVED', card =>
+    {
+      this.card = card;
     });
   }, created()
   {

@@ -15,7 +15,6 @@ export default {
 <style scoped>
 div
 {
-  height:           150vh;
-  background-color: antiquewhite;
+  height: 150vh;
 }
 </style>

@@ -54,6 +54,24 @@ io.on('connection', function(socket)
 			}
 		}
 	});
+
+	socket.on('CARD_MOVED', ({ name, x, y, isBack }) =>
+	{
+		for (const card of cardsOnBoard)
+		{
+			if (card.name === name)
+			{
+				card.x      = x;
+				card.y      = y;
+				card.isBack = isBack;
+
+				console.log(cardsOnBoard);
+
+				io.emit('CARD_' + name + '_MOVED', card);
+				return;
+			}
+		}
+	});
 });
 
 const hasBeenInit = function()
