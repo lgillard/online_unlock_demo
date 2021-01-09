@@ -27,10 +27,10 @@ export default {
   }, methods:  {
     previous()
     {
-      this.currentCardIndex = (this.currentCardIndex - 1) % (this.cards.length - 1);
+      this.currentCardIndex = (this.currentCardIndex + this.cards.length - 1) % this.cards.length;
     }, next()
     {
-      this.currentCardIndex = (this.currentCardIndex + 1) % (this.cards.length - 1);
+      this.currentCardIndex = (this.currentCardIndex + 1) % this.cards.length;
     }, cardAddOnBoard()
     {
       this.socket.emit('CARD_FROM_PICK_TO_BOARD', this.currentCard.name);
