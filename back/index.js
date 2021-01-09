@@ -31,7 +31,16 @@ io.on('connection', function(socket)
 
 	socket.on('CARD_RETURNED', function({ name, isBack })
 	{
-		io.emit('CARD_RETURNED_' + name, isBack);
+		for (const card of cardsOnBoard)
+		{
+			if (card.name === name)
+			{
+				card.isBack = isBack;
+
+				io.emit('CARD_RETURNED_' + name, isBack);
+				return;
+			}
+		}
 	});
 
 	socket.on('INIT_STACK', cards =>
@@ -64,8 +73,6 @@ io.on('connection', function(socket)
 				card.x      = x;
 				card.y      = y;
 				card.isBack = isBack;
-
-				console.log(cardsOnBoard);
 
 				io.emit('CARD_' + name + '_MOVED', card);
 				return;
