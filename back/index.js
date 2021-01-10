@@ -78,6 +78,10 @@ io.on('connection', function(socket)
 				io.emit('CARD_GO_FRONT', { name, position });
 				io.emit('CARD_' + name + '_MOVED', card);
 			}
+			else if (card.position > position)
+			{
+				card.position = card.position - 1;
+			}
 		}
 	});
 });

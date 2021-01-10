@@ -110,7 +110,7 @@ export default {
     {
       if (name !== _this.card.name && _this.card.position > position)
       {
-        _this.card.position --;
+        _this.card.position = _this.card.position - 1;
       }
     });
   }, created()
