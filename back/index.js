@@ -13,6 +13,20 @@ const io = require('socket.io')(server, {
 	},
 });
 
+// Card list by scenario
+const scenario = {
+	demo: [{ x: 100, y: 100, name: '69', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '42', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '46', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '16', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '35', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '25', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '48', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '21', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '69', isBack: true, position: 1 },
+		   { x: 100, y: 100, name: '11', isBack: true, position: 1 }],
+};
+
 var cardsOnBoard   = [];
 var cardsOnPick    = [];
 var cardsOnDiscard = [];
@@ -21,13 +35,10 @@ io.on('connection', function(socket)
 {
 	if (!hasBeenInit())
 	{
-		// TODO: found a better way, this code smells ...
-		socket.emit('CARD_INIT_REQUIRED');
+		cardsOnPick  = scenario.demo;
+		cardsOnBoard = [{ x: 100, y: 100, name: 'start', isBack: true, position: 1 }];
 	}
-	else
-	{
-		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
-	}
+	socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
 
 	socket.on('CARD_RETURNED', function({ name, isBack })
 	{

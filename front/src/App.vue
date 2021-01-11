@@ -24,21 +24,6 @@ export default {
     return { socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] } };
   }, mounted()
   {
-    this.socket.on('CARD_INIT_REQUIRED', () =>
-    {
-      // TODO: explore scenario imgs to populate array
-      this.pick = [{ x: 100, y: 100, name: 'start', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '69', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '42', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '46', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '16', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '35', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '25', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '48', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '69', isBack: true, position: 1 },
-                   { x: 100, y: 100, name: '11', isBack: true, position: 1 }];
-      this.socket.emit('INIT_STACK', this.pick);
-    });
     this.socket.on('CARD_STACKS', data =>
     {
       this.board = data.cardsOnBoard;
