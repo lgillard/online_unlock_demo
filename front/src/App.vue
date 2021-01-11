@@ -47,4 +47,9 @@ export default {
 {
   cursor: grab;
 }
+
+.pointer
+{
+  cursor: pointer;
+}
 </style>

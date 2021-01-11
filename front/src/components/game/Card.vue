@@ -1,7 +1,9 @@
 <template>
   <div :style="getXYStyle" class="container p-0 m-0">
-    <div class="toolbar card-width h2 mb-2">
-      <b-icon-trash v-b-tooltip.hover title="Défausser la carte"/>
+    <div v-if="draggable" class="toolbar card-width h2 mb-2" @click="discard">
+      <div v-b-tooltip.hover class="pointer icon-container" title="Défausser la carte">
+        <b-icon-trash/>
+      </div>
     </div>
     <img :id="card.name"
          :src="card.isBack ? backImgSrc : imgSrc"
@@ -42,6 +44,7 @@ export default {
       return 'z-index: ' + (100 + this.card.position) + ';';
     },
   }, methods:  {
+
     emitCardClickEvent(e)
     {
       e.preventDefault();
@@ -53,6 +56,9 @@ export default {
     {
       e.preventDefault();
       this.socket.emit('CARD_RETURNED', { name: this.card.name, isBack: !this.card.isBack });
+    }, discard()
+    {
+      this.socket.emit('CARD_FROM_BOARD_TO_DISCARD', this.card.name);
     }, _initDragAndDropListeners()
     {
       let cardDraggedId;
@@ -138,11 +144,10 @@ img
 
 .toolbar
 {
-  height:     50px;
-  padding:    5px 10px;
-  position:   absolute;
-  text-align: end;
-  top:        -50px;
+  height:   50px;
+  padding:  5px 10px;
+  position: absolute;
+  top:      -50px;
 }
 
 .container > .toolbar
@@ -159,5 +164,13 @@ img
 {
   height: fit-content;
   width:  fit-content;
+}
+
+.icon-container
+{
+  margin:   0;
+  position: absolute;
+  right:    0;
+  width:    fit-content;
 }
 </style>

@@ -53,7 +53,7 @@ io.on('connection', function(socket)
 			}
 		}
 	});
-	
+
 	socket.on('CARD_FROM_PICK_TO_BOARD', cardName =>
 	{
 		// TODO: improve => change array to key/value array
@@ -63,6 +63,22 @@ io.on('connection', function(socket)
 			{
 				cardsOnBoard.push(cardsOnPick[key]);
 				cardsOnPick.splice(key, 1);
+
+				io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+				return;
+			}
+		}
+	});
+
+	socket.on('CARD_FROM_BOARD_TO_DISCARD', cardName =>
+	{
+		// TODO: improve => change array to key/value array
+		for (let key = 0; key < cardsOnBoard.length; key ++)
+		{
+			if (cardName === cardsOnBoard[key].name)
+			{
+				cardsOnDiscard.push(cardsOnPick[key]);
+				cardsOnBoard.splice(key, 1);
 
 				io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
 				return;
