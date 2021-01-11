@@ -1,10 +1,15 @@
 <template>
-  <img :id="card.name"
-       :src="card.isBack ? backImgSrc : imgSrc"
-       :style="getZIndex + getXYStyle"
-       alt="Start card"
-       class="card-size grab ml-5 mr-5"
-       @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+  <div :style="getXYStyle" class="container p-0 m-0">
+    <div class="toolbar card-width h2 mb-2">
+      <b-icon-trash v-b-tooltip.hover title="Défausser la carte"/>
+    </div>
+    <img :id="card.name"
+         :src="card.isBack ? backImgSrc : imgSrc"
+         :style="getZIndex"
+         alt="Start card"
+         class="card-width grab m-0"
+         @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+  </div>
 </template>
 
 <script>
@@ -121,13 +126,38 @@ export default {
 </script>
 
 <style scoped>
-.card-size
+.card-width
 {
-  height: 450px;
+  width: 270px;
 }
 
 img
 {
   border-radius: 10px;
+}
+
+.toolbar
+{
+  height:     50px;
+  padding:    5px 10px;
+  position:   absolute;
+  text-align: end;
+  top:        -50px;
+}
+
+.container > .toolbar
+{
+  display: none;
+}
+
+.container:hover > .toolbar
+{
+  display: block;
+}
+
+.container
+{
+  height: fit-content;
+  width:  fit-content;
 }
 </style>
