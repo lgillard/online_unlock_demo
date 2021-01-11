@@ -125,4 +125,9 @@ export default {
 {
   height: 450px;
 }
+
+img
+{
+  border-radius: 10px;
+}
 </style>
