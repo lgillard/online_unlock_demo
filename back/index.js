@@ -53,12 +53,7 @@ io.on('connection', function(socket)
 			}
 		}
 	});
-
-	socket.on('INIT_STACK', cards =>
-	{
-		cardsOnPick = cards;
-	});
-
+	
 	socket.on('CARD_FROM_PICK_TO_BOARD', cardName =>
 	{
 		// TODO: improve => change array to key/value array
