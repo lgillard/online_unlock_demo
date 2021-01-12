@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="search-cards-modal" size="xl">
+  <b-modal id="search-cards-modal" ok-only size="xl">
     <h2>Rechercher une carte</h2>
     <Pick :cards="cards" :socket="socket"/>
   </b-modal>
