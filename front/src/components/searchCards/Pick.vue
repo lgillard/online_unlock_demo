@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-content-center">
+  <div v-if="cards.length > 0" class="row justify-content-center">
     <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
       <b-icon-arrow-bar-left/>
     </b-button>
@@ -8,6 +8,7 @@
       <b-icon-arrow-bar-right/>
     </b-button>
   </div>
+  <div v-else>La pioche est vide</div>
 </template>
 
 <script>
