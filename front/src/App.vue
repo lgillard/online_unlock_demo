@@ -3,6 +3,7 @@
     <Header/>
     <main>
       <SearchCardsModal :cards="pick" :socket="socket"/>
+      <HelpModal/>
       <Board :cards="board" :socket="socket"/>
     </main>
     <Footer/>
@@ -13,12 +14,13 @@
 import Footer           from '@/components/Footer';
 import Board            from '@/components/game/Board';
 import Header           from '@/components/Header';
+import HelpModal        from '@/components/HelpModal';
 import SearchCardsModal from '@/components/searchCards/SearchCardsModal';
 import io               from 'socket.io-client';
 
 export default {
   name: 'App', components: {
-    SearchCardsModal, Board, Footer, Header,
+    HelpModal, SearchCardsModal, Board, Footer, Header,
   }, data()
   {
     return { socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] } };

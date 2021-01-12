@@ -14,9 +14,12 @@
 
         <!-- Right part -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item v-b-modal.search-cards-modal>
+          <b-nav-item v-b-modal.search-cards-modal class="mr-4">
             <b-icon-search class="mr-3"/>
             <div class="d-inline">Rechercher une carte</div>
+          </b-nav-item>
+          <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
+            <b-icon-question-circle class="mr-3"/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
