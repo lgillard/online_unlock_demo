@@ -1,11 +1,11 @@
 <template>
   <div v-if="cards.length > 0" class="row justify-content-center">
     <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
-      <b-icon-arrow-bar-left/>
+      <b-icon-chevron-left/>
     </b-button>
     <Card v-b-tooltip.hover :card="currentCard" :draggable="false" :return-allowed="false" :socket="socket" title="Ajouter sur la table" @cardClicked="cardAddOnBoard"/>
     <b-button v-b-tooltip.hover title="Carte suivante" variant="light" @click="next">
-      <b-icon-arrow-bar-right/>
+      <b-icon-chevron-right/>
     </b-button>
   </div>
   <div v-else>La pioche est vide</div>
