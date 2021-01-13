@@ -1,6 +1,6 @@
 <template>
   <b-modal id="search-cards-modal" ok-only>
-    <h2>Rechercher une carte</h2>
+    <h2>Rechercher dans la pioche</h2>
     <Pick :cards="cards" :socket="socket"/>
   </b-modal>
 </template>
