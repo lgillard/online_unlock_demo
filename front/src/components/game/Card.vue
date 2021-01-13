@@ -1,7 +1,10 @@
 <template>
   <div :style="getXYStyle" class="container p-0 m-0">
-    <div v-if="draggable" class="toolbar card-width h2 mb-2" @click="discard">
-      <div v-b-tooltip.hover class="pointer icon-container" title="Défausser la carte">
+    <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container">
+      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche">
+        <b-icon-arrow-bar-up/>
+      </div>
+      <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
         <b-icon-trash/>
       </div>
     </div>
@@ -157,7 +160,7 @@ img
 
 .container:hover > .toolbar
 {
-  display: block;
+  display: flex;
 }
 
 .container
@@ -172,5 +175,10 @@ img
   position: absolute;
   right:    0;
   width:    fit-content;
+}
+
+.icon
+{
+  margin: 5px;
 }
 </style>
