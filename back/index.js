@@ -107,9 +107,10 @@ const moveCardIntoStack = (from, to, cardName) =>
 	{
 		if (cardName === from[key].name)
 		{
-			const card = from[key];
-			card.x     = 100;
-			card.y     = 100;
+			const card  = from[key];
+			card.x      = 100;
+			card.y      = 100;
+			card.isBack = true;
 			to.push(card);
 			from.splice(key, 1);
 

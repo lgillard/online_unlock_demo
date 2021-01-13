@@ -1,5 +1,5 @@
 <template>
-  <div :style="getXYStyle" class="container p-0 m-0">
+  <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
     <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container container">
       <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
         <b-icon-arrow-bar-up/>
@@ -10,7 +10,6 @@
     </div>
     <img :id="card.name"
          :src="card.isBack ? backImgSrc : imgSrc"
-         :style="getZIndex"
          alt="Start card"
          class="card-width grab m-0"
          @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
@@ -168,8 +167,9 @@ img
 
 .container
 {
-  height: fit-content;
-  width:  fit-content;
+  background-color: whitesmoke;
+  height:           fit-content;
+  width:            fit-content;
 }
 
 .icon-container
