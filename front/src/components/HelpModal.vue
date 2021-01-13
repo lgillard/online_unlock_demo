@@ -38,7 +38,33 @@
       </div>
       <div class="ml-4">
         <h4>Défausser</h4>
-        <p>Pour cela, mettez votre curseur sur la carte puis cliquez sur la poubelle qui apparaît en haut à droite. La carte sera alors défaussée pour tous les participants. Vous pourrez accéder à cette carte à tout moment en faisant...TODO... </p>
+        <div>
+          <p>Au cours de l'aventure vous serez amenés à défausser des cartes.</p>
+          <p>Pour cela:</p>
+          <ul>
+            <li>Mettez votre curseur sur la carte</li>
+            <li>Cliquez sur la poubelle
+              <b-icon-trash/>
+                qui apparaît en haut à droite.
+            </li>
+          </ul>
+          <p> La carte sera alors défaussée pour tous les participants. Vous pourrez accéder à cette carte à tout moment en cliquant sur "Parcourir la défausse" en haut à droite de l'écran. </p>
+        </div>
+      </div>
+      <div class="ml-4">
+        <h4>Replacer une carte dans la pioche</h4>
+        <div>
+          <p>Il peut arriver au cours de l'aventure que vous vous trompiez de carte. Dans ce cas vous pouvez replacer la carte dans la pioche. </p>
+          <p>Pour cela :</p>
+          <ul>
+            <li>Placez votre curseur sur la carte</li>
+            <li>Cliquez sur la flèche
+              <b-icon-arrow-bar-up/>
+                qui apparaît en haut à droite
+            </li>
+          </ul>
+          <p>La carte sera déposée dans la pioche pour tous les participants.</p>
+        </div>
       </div>
     </div>
   </b-modal>

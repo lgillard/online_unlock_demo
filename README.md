@@ -12,20 +12,6 @@ The project should allowed remote people to play unlock game demo together. I th
 -  Clone the project
 - Run the project (follow instructions below)
 - Share your server url and port
-### Interactions
-#### Search cards
-TODO: Add gif
-
- - Click on "Rechercher une carte" button at the right top of the screen
- - Explore the pick with arrow until you found your target cards
- - Click on it to add to board
- - When you have finished you can close the modal by clicking on the cross
- 
-#### Card interactions
-TODO: Add gif
-
-- You can return cards by clicking on it
-- You can move cards by grabbing (drag and drop it) 
 
 ### Run project
 Warning: node and vue installation will be required. First, make sure it were installed properly.
