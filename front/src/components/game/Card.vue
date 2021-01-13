@@ -1,10 +1,19 @@
 <template>
-  <img :id="card.name"
-       :src="card.isBack ? backImgSrc : imgSrc"
-       :style="getZIndex + getXYStyle"
-       alt="Start card"
-       class="card-size grab ml-5 mr-5"
-       @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+  <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
+    <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container container">
+      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
+        <b-icon-arrow-bar-up/>
+      </div>
+      <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
+        <b-icon-trash/>
+      </div>
+    </div>
+    <img :id="card.name"
+         :src="card.isBack ? backImgSrc : imgSrc"
+         alt="Start card"
+         class="card-width grab m-0"
+         @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+  </div>
 </template>
 
 <script>
@@ -37,6 +46,7 @@ export default {
       return 'z-index: ' + (100 + this.card.position) + ';';
     },
   }, methods:  {
+
     emitCardClickEvent(e)
     {
       e.preventDefault();
@@ -48,6 +58,12 @@ export default {
     {
       e.preventDefault();
       this.socket.emit('CARD_RETURNED', { name: this.card.name, isBack: !this.card.isBack });
+    }, discard()
+    {
+      this.socket.emit('CARD_FROM_BOARD_TO_DISCARD', this.card.name);
+    }, backToPick()
+    {
+      this.socket.emit('CARD_FROM_BOARD_TO_PICK', this.card.name);
     }, _initDragAndDropListeners()
     {
       let cardDraggedId;
@@ -121,8 +137,51 @@ export default {
 </script>
 
 <style scoped>
-.card-size
+.card-width
 {
-  height: 450px;
+  width: 270px;
+}
+
+img
+{
+  border-radius: 10px;
+}
+
+.toolbar
+{
+  height:   50px;
+  padding:  5px 10px;
+  position: absolute;
+  top:      -50px;
+}
+
+.container > .toolbar
+{
+  display: none;
+}
+
+.container:hover > .toolbar
+{
+  display: flex;
+}
+
+.container
+{
+  background-color: whitesmoke;
+  height:           fit-content;
+  width:            fit-content;
+}
+
+.icon-container
+{
+  margin:   0;
+  position: absolute;
+  right:    0;
+  width:    fit-content;
+}
+
+.icon
+{
+  margin: 5px;
 }
 </style>
