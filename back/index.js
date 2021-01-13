@@ -97,10 +97,31 @@ io.on('connection', function(socket)
 		{
 			if (cardName === cardsOnBoard[key].name)
 			{
-				cardsOnDiscard.push(cardsOnPick[key]);
+				cardsOnDiscard.push(cardsOnBoard[key]);
 				cardsOnBoard.splice(key, 1);
 
-				io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
+				io.emit('CARD_STACKS', result);
+				return;
+			}
+		}
+	});
+
+	socket.on('CARD_FROM_DISCARD_TO_BOARD', cardName =>
+	{
+		// TODO: improve => change array to key/value array
+		for (let key = 0; key < cardsOnDiscard.length; key ++)
+		{
+			if (cardName === cardsOnDiscard[key].name)
+			{
+				const card = cardsOnDiscard[key];
+				card.x     = 100;
+				card.y     = 100;
+				cardsOnBoard.push(cardsOnDiscard[key]);
+				cardsOnDiscard.splice(key, 1);
+
+				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
+				io.emit('CARD_STACKS', result);
 				return;
 			}
 		}

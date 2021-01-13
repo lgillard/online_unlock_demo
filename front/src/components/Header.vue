@@ -9,14 +9,18 @@
         <!-- Left part -->
         <b-navbar-nav>
           <!-- TODO: use variable for boardgames box value -->
-          <b-nav-text>Boite de jeu : Demo adventures</b-nav-text>
+          <b-nav-text>Boite de jeu : Tutoriel</b-nav-text>
         </b-navbar-nav>
 
         <!-- Right part -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item v-b-modal.search-cards-modal class="mr-4">
+          <b-nav-item v-b-modal.search-pick-modal class="mr-4">
             <b-icon-search class="mr-3"/>
             <div class="d-inline">Rechercher une carte</div>
+          </b-nav-item>
+          <b-nav-item v-b-modal.search-discard-modal class="mr-4">
+            <b-icon-trash class="mr-3"/>
+            <div class="d-inline">Parcourir la défausse</div>
           </b-nav-item>
           <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
             <b-icon-question-circle class="mr-3"/>

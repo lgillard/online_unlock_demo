@@ -2,7 +2,8 @@
   <div id="app">
     <Header/>
     <main>
-      <SearchCardsModal :cards="pick" :socket="socket"/>
+      <PickModal :cards="pick" :socket="socket"/>
+      <DiscardModal :cards="discard" :socket="socket"/>
       <HelpModal/>
       <Board :cards="board" :socket="socket"/>
     </main>
@@ -11,25 +12,27 @@
 </template>
 
 <script>
-import Footer           from '@/components/Footer';
-import Board            from '@/components/game/Board';
-import Header           from '@/components/Header';
-import HelpModal        from '@/components/HelpModal';
-import SearchCardsModal from '@/components/searchCards/SearchCardsModal';
-import io               from 'socket.io-client';
+import DiscardModal from '@/components/discardExplorer/DiscardModal';
+import Footer       from '@/components/Footer';
+import Board        from '@/components/game/Board';
+import Header       from '@/components/Header';
+import HelpModal    from '@/components/HelpModal';
+import PickModal    from '@/components/pickExplorer/PickModal';
+import io           from 'socket.io-client';
 
 export default {
   name: 'App', components: {
-    HelpModal, SearchCardsModal, Board, Footer, Header,
+    DiscardModal, PickModal, HelpModal, Board, Footer, Header,
   }, data()
   {
-    return { socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] } };
+    return { socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] } };
   }, mounted()
   {
     this.socket.on('CARD_STACKS', data =>
     {
-      this.board = data.cardsOnBoard;
-      this.pick  = data.cardsOnPick;
+      this.board   = data.cardsOnBoard;
+      this.pick    = data.cardsOnPick;
+      this.discard = data.cardsOnDiscard;
     });
   },
 };
