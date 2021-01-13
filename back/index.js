@@ -55,76 +55,22 @@ io.on('connection', function(socket)
 
 	socket.on('CARD_FROM_PICK_TO_BOARD', cardName =>
 	{
-		// TODO: improve => change array to key/value array
-		for (let key = 0; key < cardsOnPick.length; key ++)
-		{
-			if (cardName === cardsOnPick[key].name)
-			{
-				const card = cardsOnPick[key];
-				card.x     = 100;
-				card.y     = 100;
-				cardsOnBoard.push(cardsOnPick[key]);
-				cardsOnPick.splice(key, 1);
-
-				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
-				io.emit('CARD_STACKS', result);
-				return;
-			}
-		}
+		moveCardIntoStack(cardsOnPick, cardsOnBoard, cardName);
 	});
 
 	socket.on('CARD_FROM_BOARD_TO_PICK', cardName =>
 	{
-		// TODO: improve => change array to key/value array
-		for (let key = 0; key < cardsOnBoard.length; key ++)
-		{
-			if (cardName === cardsOnBoard[key].name)
-			{
-				cardsOnPick.push(cardsOnBoard[key]);
-				cardsOnBoard.splice(key, 1);
-
-				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
-				io.emit('CARD_STACKS', result);
-				return;
-			}
-		}
+		moveCardIntoStack(cardsOnBoard, cardsOnPick, cardName);
 	});
 
 	socket.on('CARD_FROM_BOARD_TO_DISCARD', cardName =>
 	{
-		// TODO: improve => change array to key/value array
-		for (let key = 0; key < cardsOnBoard.length; key ++)
-		{
-			if (cardName === cardsOnBoard[key].name)
-			{
-				cardsOnDiscard.push(cardsOnBoard[key]);
-				cardsOnBoard.splice(key, 1);
-
-				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
-				io.emit('CARD_STACKS', result);
-				return;
-			}
-		}
+		moveCardIntoStack(cardsOnBoard, cardsOnDiscard, cardName);
 	});
 
 	socket.on('CARD_FROM_DISCARD_TO_BOARD', cardName =>
 	{
-		// TODO: improve => change array to key/value array
-		for (let key = 0; key < cardsOnDiscard.length; key ++)
-		{
-			if (cardName === cardsOnDiscard[key].name)
-			{
-				const card = cardsOnDiscard[key];
-				card.x     = 100;
-				card.y     = 100;
-				cardsOnBoard.push(cardsOnDiscard[key]);
-				cardsOnDiscard.splice(key, 1);
-
-				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
-				io.emit('CARD_STACKS', result);
-				return;
-			}
-		}
+		moveCardIntoStack(cardsOnDiscard, cardsOnBoard, cardName);
 	});
 
 	socket.on('CARD_MOVED', ({ name, x, y, isBack, position }) =>
@@ -152,4 +98,24 @@ io.on('connection', function(socket)
 const hasBeenInit = function()
 {
 	return cardsOnBoard.length + cardsOnPick.length + cardsOnDiscard.length > 0;
+};
+
+const moveCardIntoStack = (from, to, cardName) =>
+{
+	// TODO: improve => change array to key/value array
+	for (let key = 0; key < from.length; key ++)
+	{
+		if (cardName === from[key].name)
+		{
+			const card = from[key];
+			card.x     = 100;
+			card.y     = 100;
+			to.push(card);
+			from.splice(key, 1);
+
+			const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
+			io.emit('CARD_STACKS', result);
+			return;
+		}
+	}
 };
