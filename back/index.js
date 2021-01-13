@@ -84,7 +84,6 @@ io.on('connection', function(socket)
 				card.isBack   = isBack;
 				card.position = cardsOnBoard.length;
 
-				io.emit('CARD_GO_FRONT', { name, position });
 				io.emit('CARD_' + name + '_MOVED', card);
 			}
 			else if (card.position > position)
@@ -92,6 +91,7 @@ io.on('connection', function(socket)
 				card.position = card.position - 1;
 			}
 		}
+		io.emit('CARD_GO_FRONT', { name, position });
 	});
 });
 
@@ -107,10 +107,11 @@ const moveCardIntoStack = (from, to, cardName) =>
 	{
 		if (cardName === from[key].name)
 		{
-			const card  = from[key];
-			card.x      = 100;
-			card.y      = 100;
-			card.isBack = true;
+			const card    = from[key];
+			card.x        = 100;
+			card.y        = 100;
+			card.isBack   = true;
+			card.position = 1;
 			to.push(card);
 			from.splice(key, 1);
 
