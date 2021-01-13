@@ -23,7 +23,6 @@ const scenario = {
 		   { x: 100, y: 100, name: '25', isBack: true, position: 1 },
 		   { x: 100, y: 100, name: '48', isBack: true, position: 1 },
 		   { x: 100, y: 100, name: '21', isBack: true, position: 1 },
-		   { x: 100, y: 100, name: '69', isBack: true, position: 1 },
 		   { x: 100, y: 100, name: '11', isBack: true, position: 1 }],
 };
 
@@ -61,10 +60,31 @@ io.on('connection', function(socket)
 		{
 			if (cardName === cardsOnPick[key].name)
 			{
+				const card = cardsOnPick[key];
+				card.x     = 100;
+				card.y     = 100;
 				cardsOnBoard.push(cardsOnPick[key]);
 				cardsOnPick.splice(key, 1);
 
-				io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
+				io.emit('CARD_STACKS', result);
+				return;
+			}
+		}
+	});
+
+	socket.on('CARD_FROM_BOARD_TO_PICK', cardName =>
+	{
+		// TODO: improve => change array to key/value array
+		for (let key = 0; key < cardsOnBoard.length; key ++)
+		{
+			if (cardName === cardsOnBoard[key].name)
+			{
+				cardsOnPick.push(cardsOnBoard[key]);
+				cardsOnBoard.splice(key, 1);
+
+				const result = { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard };
+				io.emit('CARD_STACKS', result);
 				return;
 			}
 		}

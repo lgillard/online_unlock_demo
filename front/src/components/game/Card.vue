@@ -1,7 +1,7 @@
 <template>
   <div :style="getXYStyle" class="container p-0 m-0">
-    <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container">
-      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche">
+    <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container container">
+      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
         <b-icon-arrow-bar-up/>
       </div>
       <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
@@ -62,6 +62,9 @@ export default {
     }, discard()
     {
       this.socket.emit('CARD_FROM_BOARD_TO_DISCARD', this.card.name);
+    }, backToPick()
+    {
+      this.socket.emit('CARD_FROM_BOARD_TO_PICK', this.card.name);
     }, _initDragAndDropListeners()
     {
       let cardDraggedId;
