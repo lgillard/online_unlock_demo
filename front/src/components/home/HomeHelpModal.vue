@@ -10,7 +10,10 @@
       </div>
       <div class="ml-4">
         <h4>Déjà joué ?</h4>
-        <p>Choisissez votre scénario en fonction de la difficulté souhaité (voir nombre d'étoile), puis cliquez sur l'image.</p>
+        <p>Choisissez votre scénario en fonction de la difficulté souhaitée (voir nombre de cadenas
+          <b-icon-lock-fill/>
+           ), puis cliquez sur l'image.
+        </p>
       </div>
     </div>
 
@@ -18,25 +21,25 @@
       <h3>Choix de la difficulté</h3>
       <div>
         <p>
-          Il existe trois niveau de difficulté. <br> Pour un maximum d'amusement il est conseillé de bien choisir son niveau. Une partie trop complexe n'est jamais agréable. </p>
+          Il existe trois niveaux de difficulté. <br> Pour un maximum d'amusement il est conseillé de bien choisir son niveau. Une partie trop complexe n'est jamais agréable. </p>
         <ul>
           <li>
-            <b-icon-star-fill/>
-            <b-icon-star/>
-            <b-icon-star/>
-            Niveau débutant. Scénarii idéals pour les personnes pas/peu familière avec les escapes games
+            <b-icon-lock-fill/>
+            <b-icon-lock/>
+            <b-icon-lock/>
+            Niveau débutant. Scénarii idéaux pour les personnes pas/peu familières avec les escape games
           </li>
           <li>
-            <b-icon-star-fill/>
-            <b-icon-star-fill/>
-            <b-icon-star/>
-            Niveau avancé. Scénarii idéals pour les personnes familière avec les escapes games
+            <b-icon-lock-fill/>
+            <b-icon-lock-fill/>
+            <b-icon-lock/>
+            Niveau avancé. Scénarii idéaux pour les personnes familières avec les escape games
           </li>
           <li>
-            <b-icon-star-fill/>
-            <b-icon-star-fill/>
-            <b-icon-star-fill/>
-            Niveau difficile. Scénarii idéals pour les personnes très familière avec les escapes games
+            <b-icon-lock-fill/>
+            <b-icon-lock-fill/>
+            <b-icon-lock-fill/>
+            Niveau difficile. Scénarii idéals pour les personnes très familières avec les escape games
           </li>
         </ul>
       </div>
