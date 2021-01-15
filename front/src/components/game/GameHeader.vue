@@ -14,16 +14,24 @@
 
         <!-- Right part -->
         <b-navbar-nav class="ml-auto">
+          <!-- Pick -->
           <b-nav-item v-b-modal.search-pick-modal class="mr-4">
             <b-icon-search class="mr-3"/>
             <div class="d-inline">Rechercher une carte</div>
+            <PickModal :cards="pick" :socket="socket"/>
           </b-nav-item>
+
+          <!-- Discard -->
           <b-nav-item v-b-modal.search-discard-modal class="mr-4">
             <b-icon-trash class="mr-3"/>
             <div class="d-inline">Parcourir la défausse</div>
+            <DiscardModal :cards="discard" :socket="socket"/>
           </b-nav-item>
+
+          <!-- Help -->
           <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
             <b-icon-question-circle class="mr-3"/>
+            <HelpModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -33,8 +41,15 @@
 
 <script>
 
+import DiscardModal from '@/components/discardExplorer/DiscardModal';
+import HelpModal    from '@/components/HelpModal';
+import PickModal    from '@/components/pickExplorer/PickModal';
+import io           from 'socket.io-client';
+
 export default {
-  name: 'Header',
+  name: 'GameHeader', components: { HelpModal, PickModal, DiscardModal }, props: {
+    socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] },
+  },
 };
 </script>
 
