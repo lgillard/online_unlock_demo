@@ -18,14 +18,14 @@
           <b-nav-item v-b-modal.search-pick-modal class="mr-4">
             <b-icon-search class="mr-3"/>
             <div class="d-inline">Rechercher une carte</div>
-            <PickModal :cards="pick" :socket="socket"/>
+            <PickModal :cards="pick" :scenario="scenario" :socket="socket"/>
           </b-nav-item>
 
           <!-- Discard -->
           <b-nav-item v-b-modal.search-discard-modal class="mr-4">
             <b-icon-trash class="mr-3"/>
             <div class="d-inline">Parcourir la défausse</div>
-            <DiscardModal :cards="discard" :socket="socket"/>
+            <DiscardModal :cards="discard" :scenario="scenario" :socket="socket"/>
           </b-nav-item>
 
           <!-- Help -->
@@ -48,7 +48,7 @@ import io            from 'socket.io-client';
 
 export default {
   name: 'GameHeader', components: { GameHelpModal, PickModal, DiscardModal }, props: {
-    socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] },
+    socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
   },
 };
 </script>

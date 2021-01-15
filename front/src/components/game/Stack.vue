@@ -3,7 +3,14 @@
     <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
       <b-icon-chevron-left/>
     </b-button>
-    <Card v-b-tooltip.hover :card="currentCard" :draggable="false" :return-allowed="false" :socket="socket" title="Ajouter sur la table" @cardClicked="onCardClick"/>
+    <Card v-b-tooltip.hover
+          :card="currentCard"
+          :draggable="false"
+          :return-allowed="false"
+          :scenario="scenario"
+          :socket="socket"
+          title="Ajouter sur la table"
+          @cardClicked="onCardClick"/>
     <b-button v-b-tooltip.hover title="Carte suivante" variant="light" @click="next">
       <b-icon-chevron-right/>
     </b-button>
@@ -15,17 +22,22 @@
 import Card from '@/components/game/Card';
 
 export default {
-  name:        'Stack', components: { Card }, props: { stackName: { default: 'pioche' }, cards: { default: () => [] }, socket: { required: true } }, data()
+  name:        'Stack',
+  components:  { Card },
+  props:       { stackName: { default: 'pioche' }, cards: { default: () => [] }, socket: { required: true }, scenario: { default: 'demo' } },
+  data()
   {
     return {
       currentCardIndex: 0,
     };
-  }, computed: {
+  },
+  computed:    {
     currentCard()
     {
       return this.cards[this.currentCardIndex];
     },
-  }, methods:  {
+  },
+  methods:     {
     previous()
     {
       this.currentCardIndex = (this.currentCardIndex + this.cards.length - 1) % this.cards.length;

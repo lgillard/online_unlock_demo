@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card v-for="card of cards" :key="card.name" :card="card" :nbTotalCards="cards.length" :socket="socket"/>
+    <Card v-for="card of cards" :key="card.name" :card="card" :nbTotalCards="cards.length" :scenario="scenario" :socket="socket"/>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import Card from '@/components/game/Card';
 
 export default {
-  name: 'Board', components: { Card }, props: { socket: { required: true }, cards: { default: () => [] } },
+  name: 'Board', components: { Card }, props: { socket: { required: true }, cards: { default: () => [] }, scenario: { default: 'demo' } },
 };
 </script>
 

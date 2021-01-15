@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <HomeHeader v-if="!scenarioHasBeenSelected"/>
-    <GameHeader v-else :discard="discard" :pick="pick" :socket="socket"/>
+    <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket"/>
     <main>
-      <HomeContent v-if="!scenarioHasBeenSelected"/>
-      <Board v-else :cards="board" :socket="socket"/>
+      <HomeContent v-if="!scenarioHasBeenSelected" @scenarioChosen="scenarioChosen"/>
+      <Board v-else :cards="board" :scenario="scenario" :socket="socket"/>
     </main>
     <Footer/>
   </div>
@@ -30,6 +30,12 @@ export default {
     scenarioHasBeenSelected()
     {
       return this.scenario !== '';
+    },
+  }, methods:  {
+    scenarioChosen(scenario)
+    {
+      this.scenario = scenario;
+      this.socket.emit('SCENARIO_CHOSEN', scenario);
     },
   }, mounted()
   {
