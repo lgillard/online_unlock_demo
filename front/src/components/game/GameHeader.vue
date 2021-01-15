@@ -3,7 +3,12 @@
     <b-navbar toggleable="sm" type="light" variant="light">
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-      <b-navbar-brand>Tutoriel</b-navbar-brand>
+      <b-navbar-brand>
+        <div v-b-tooltip:hover class="mb-2 h2 d-inline-block power pointer" title="Quitter la partie" @click="quitGame">
+          <b-icon-power/>
+        </div>
+        Tutoriel
+      </b-navbar-brand>
 
       <b-collapse id="nav-text-collapse" is-nav>
         <!-- Left part -->
@@ -47,12 +52,20 @@ import PickModal     from '@/components/pickExplorer/PickModal';
 import io            from 'socket.io-client';
 
 export default {
-  name: 'GameHeader', components: { GameHelpModal, PickModal, DiscardModal }, props: {
+  name:       'GameHeader', components: { GameHelpModal, PickModal, DiscardModal }, props: {
     socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
+  }, methods: {
+    quitGame()
+    {
+      this.$emit('quitGame');
+    },
   },
 };
 </script>
 
 <style scoped>
-
+.power
+{
+  margin: inherit;
+}
 </style>
