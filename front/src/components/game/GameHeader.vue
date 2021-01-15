@@ -31,7 +31,7 @@
           <!-- Help -->
           <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
             <b-icon-question-circle class="mr-3"/>
-            <HelpModal/>
+            <GameHelpModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -41,13 +41,13 @@
 
 <script>
 
-import DiscardModal from '@/components/discardExplorer/DiscardModal';
-import HelpModal    from '@/components/HelpModal';
-import PickModal    from '@/components/pickExplorer/PickModal';
-import io           from 'socket.io-client';
+import DiscardModal  from '@/components/discardExplorer/DiscardModal';
+import GameHelpModal from '@/components/game/GameHelpModal';
+import PickModal     from '@/components/pickExplorer/PickModal';
+import io            from 'socket.io-client';
 
 export default {
-  name: 'GameHeader', components: { HelpModal, PickModal, DiscardModal }, props: {
+  name: 'GameHeader', components: { GameHelpModal, PickModal, DiscardModal }, props: {
     socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] },
   },
 };

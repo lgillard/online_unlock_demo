@@ -10,7 +10,7 @@
           <!-- Help -->
           <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
             <b-icon-question-circle class="mr-3"/>
-            <HelpModal/>
+            <HomeHelpModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -19,8 +19,10 @@
 </template>
 
 <script>
+import HomeHelpModal from '@/components/home/HomeHelpModal';
+
 export default {
-  name: 'HomeHeader',
+  name: 'HomeHeader', components: { HomeHelpModal },
 };
 </script>
 

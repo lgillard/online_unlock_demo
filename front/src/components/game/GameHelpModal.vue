@@ -72,7 +72,7 @@
 
 <script>
 export default {
-  name: 'HelpModal',
+  name: 'GameHelpModal',
 };
 </script>
 
