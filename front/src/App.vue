@@ -34,27 +34,27 @@ export default {
   }, methods:  {
     scenarioChosen(scenario)
     {
-      this.scenario = scenario;
       this.socket.emit('SCENARIO_CHOSEN', scenario);
     }, quitGame()
     {
-      this.scenario = '';
+      this.socket.emit('ABANDON_CURRENT_GAME');
     },
   }, mounted()
   {
+    const _this = this;
     this.socket.on('SCENARIO_IN_PROGRESS', scenario =>
     {
-      this.scenario = scenario;
+      _this.scenario = scenario;
     });
     this.socket.on('CARD_STACKS', data =>
     {
-      this.board   = data.cardsOnBoard;
-      this.pick    = data.cardsOnPick;
-      this.discard = data.cardsOnDiscard;
+      _this.board   = data.cardsOnBoard;
+      _this.pick    = data.cardsOnPick;
+      _this.discard = data.cardsOnDiscard;
     });
     this.socket.on('ABANDON_CURRENT_GAME', () =>
     {
-      this.scenario = '';
+      _this.scenario = '';
     });
   },
 };

@@ -64,34 +64,37 @@ let scenarioInProgress = '';
 
 io.on('connection', function(socket)
 {
+	socket.emit('SCENARIO_IN_PROGRESS', scenarioInProgress);
 	if (scenarioInProgress !== '')
 	{
-		socket.emit('SCENARIO_IN_PROGRESS', scenarioInProgress);
 		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
 	}
 
 	socket.on('ABANDON_CURRENT_GAME', () =>
 	{
+		io.emit('ABANDON_CURRENT_GAME');
 		scenarioInProgress = '';
-		socket.emit('ABANDON_CURRENT_GAME');
-		cardsOnBoard   = [];
-		cardsOnDiscard = [];
-		cardsOnPick    = [];
+		cardsOnBoard       = [];
+		cardsOnDiscard     = [];
+		cardsOnPick        = [];
 	});
 
 	socket.on('SCENARIO_CHOSEN', scenarioChosen =>
 	{
 		scenarioInProgress = scenarioChosen;
-		if (!hasBeenInit())
+
+		// Init stacks
+		cardsOnDiscard = [];
+		cardsOnPick    = [];
+		for (const cardName of scenarii[scenarioInProgress])
 		{
-			cardsOnPick = [];
-			for (const cardName of scenarii[scenarioInProgress])
-			{
-				cardsOnPick.push(buildCard(cardName));
-			}
-			cardsOnBoard = [buildCard('start')];
+			cardsOnPick.push(buildCard(cardName));
 		}
-		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+		cardsOnBoard = [buildCard('start')];
+
+		// Notify clients
+		io.emit('SCENARIO_IN_PROGRESS', scenarioInProgress);
+		io.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
 	});
 
 	socket.on('CARD_RETURNED', function({ name, isBack })
