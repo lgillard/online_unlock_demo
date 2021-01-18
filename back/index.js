@@ -15,7 +15,7 @@ const io = require('socket.io')(server, {
 
 const buildCard = name =>
 {
-	return { x: 100, y: 100, name: name, isBack: true, position: 1 };
+	return { x: 100, y: 100, name: name, isBack: true, position: 1, rotation: 0 };
 };
 
 // Card list by scenario
@@ -128,7 +128,7 @@ io.on('connection', function(socket)
 		moveCardIntoStack(cardsOnDiscard, cardsOnBoard, cardName);
 	});
 
-	socket.on('CARD_MOVED', ({ name, x, y, isBack, position }) =>
+	socket.on('CARD_MOVED', ({ name, x, y, isBack, position, rotation }) =>
 	{
 		for (const card of cardsOnBoard)
 		{
@@ -136,6 +136,7 @@ io.on('connection', function(socket)
 			{
 				card.x        = x;
 				card.y        = y;
+				card.rotation = rotation;
 				card.isBack   = isBack;
 				card.position = cardsOnBoard.length;
 
@@ -165,6 +166,7 @@ const moveCardIntoStack = (from, to, cardName) =>
 			const card    = from[key];
 			card.x        = 100;
 			card.y        = 100;
+			card.rotation = 0;
 			card.isBack   = true;
 			card.position = 1;
 			to.push(card);

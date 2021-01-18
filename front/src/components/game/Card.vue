@@ -1,18 +1,27 @@
 <template>
   <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
-    <div v-if="draggable" class="toolbar card-width h2 mb-2 icon-container container">
+    <div v-if="draggable" class="toolbar h2 mb-2 icon-container container">
       <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
         <b-icon-arrow-bar-up/>
       </div>
       <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
         <b-icon-trash/>
       </div>
+      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">
+        <b-icon-arrow-counterclockwise/>
+      </div>
+      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
+        <b-icon-arrow-clockwise/>
+      </div>
     </div>
-    <img :id="card.name"
-         :src="card.isBack ? backImgSrc : imgSrc"
-         alt="Start card"
-         class="card-width grab m-0"
-         @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+    <div :style="getWidthHeight">
+      <img :id="card.name"
+           :src="card.isBack ? backImgSrc : imgSrc"
+           :style="getRotation"
+           alt="Start card"
+           class="card-width grab m-0"
+           @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+    </div>
   </div>
 </template>
 
@@ -23,12 +32,18 @@ export default {
       default: () =>
                {
                  return {
-                   x: 100, y: 100, name: 'start', isBack: true, position: 1,
+                   x: 100, y: 100, name: 'start', isBack: true, position: 1, rotation: 0,
                  };
                },
     },
   }, computed: {
-    backImgSrc()
+    isTurned()
+    {
+      return (this.card.rotation % 180) !== 0;
+    }, getWidthHeight()
+    {
+      return !this.isTurned ? 'width: 270px; height: 490px;' : 'height: 270px; width: 490px;';
+    }, backImgSrc()
     {
       return this._getImgUrl(this.card.name + '_back');
     }, imgSrc()
@@ -44,10 +59,21 @@ export default {
     }, getZIndex()
     {
       return 'z-index: ' + (100 + this.card.position) + ';';
+    }, getRotation()
+    {
+      const rotateStyle = '-webkit-transform: rotate(' + this.card.rotation + 'deg); -moz-transform: rotate(' + this.card.rotation + 'deg); -o-transform: rotate(' + this.card.rotation + 'deg); -ms-transform: rotate(' + this.card.rotation + 'deg); transform: rotate(' + this.card.rotation + 'deg);';
+      return rotateStyle + (this.isTurned ? 'margin-top: -110px !important;' : '');
     },
   }, methods:  {
-
-    emitCardClickEvent(e)
+    turnLeft()
+    {
+      this.card.rotation = (this.card.rotation - 90 + 360) % 360;
+      this.socket.emit('CARD_MOVED', this.card);
+    }, turnRight()
+    {
+      this.card.rotation = (this.card.rotation + 90 + 360) % 360;
+      this.socket.emit('CARD_MOVED', this.card);
+    }, emitCardClickEvent(e)
     {
       e.preventDefault();
       this.$emit('cardClicked');
@@ -105,9 +131,12 @@ export default {
       // prevent default to allow drop
       event.preventDefault();
 
+      const height = !this.isTurned ? 270 : 450;
+      const width  = !this.isTurned ? 450 : 270;
+
       // move dragged elem to the selected drop target
-      this.card.x = event.x + window.scrollX - 270 / 2;
-      this.card.y = event.y + window.scrollY - 450 / 2;
+      this.card.x = event.x + window.scrollX - height / 2;
+      this.card.y = event.y + window.scrollY - width / 2;
     },
   }, mounted()
   {
