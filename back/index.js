@@ -20,40 +20,40 @@ const buildCard = name =>
 
 // Card list by scenario
 const scenarii = {
-	demo: [buildCard('69'),
-		   buildCard('42'),
-		   buildCard('46'),
-		   buildCard('16'),
-		   buildCard('35'),
-		   buildCard('25'),
-		   buildCard('48'),
-		   buildCard('21'),
-		   buildCard('11')],
-	christmas: [buildCard('2'),
-				buildCard('51'),
-				buildCard('5'),
-				buildCard('67'),
-				buildCard('14'),
-				buildCard('34'),
-				buildCard('39'),
-				buildCard('69'),
-				buildCard('42'),
-				buildCard('84'),
-				buildCard('92'),
-				buildCard('35'),
-				buildCard('93'),
-				buildCard('86'),
-				buildCard('50'),
-				buildCard('52'),
-				buildCard('63'),
-				buildCard('68'),
-				buildCard('72'),
-				buildCard('99'),
-				buildCard('19'),
-				buildCard('23'),
-				buildCard('78'),
-				buildCard('65'),
-				buildCard('97')],
+	demo: ['69',
+		   '42',
+		   '46',
+		   '16',
+		   '35',
+		   '25',
+		   '48',
+		   '21',
+		   '11'],
+	christmas: ['2',
+				'51',
+				'5',
+				'67',
+				'14',
+				'34',
+				'39',
+				'69',
+				'42',
+				'84',
+				'92',
+				'35',
+				'93',
+				'86',
+				'50',
+				'52',
+				'63',
+				'68',
+				'72',
+				'99',
+				'19',
+				'23',
+				'78',
+				'65',
+				'97'],
 
 };
 
@@ -74,6 +74,9 @@ io.on('connection', function(socket)
 	{
 		scenarioInProgress = '';
 		socket.emit('ABANDON_CURRENT_GAME');
+		cardsOnBoard   = [];
+		cardsOnDiscard = [];
+		cardsOnPick    = [];
 	});
 
 	socket.on('SCENARIO_CHOSEN', scenarioChosen =>
@@ -81,8 +84,12 @@ io.on('connection', function(socket)
 		scenarioInProgress = scenarioChosen;
 		if (!hasBeenInit())
 		{
-			cardsOnPick  = scenarii[scenarioInProgress];
-			cardsOnBoard = [{ x: 100, y: 100, name: 'start', isBack: true, position: 1 }];
+			cardsOnPick = [];
+			for (const cardName of scenarii[scenarioInProgress])
+			{
+				cardsOnPick.push(buildCard(cardName));
+			}
+			cardsOnBoard = [buildCard('start')];
 		}
 		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
 	});
