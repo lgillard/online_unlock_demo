@@ -42,11 +42,19 @@ export default {
     },
   }, mounted()
   {
+    this.socket.on('SCENARIO_IN_PROGRESS', scenario =>
+    {
+      this.scenario = scenario;
+    });
     this.socket.on('CARD_STACKS', data =>
     {
       this.board   = data.cardsOnBoard;
       this.pick    = data.cardsOnPick;
       this.discard = data.cardsOnDiscard;
+    });
+    this.socket.on('ABANDON_CURRENT_GAME', () =>
+    {
+      this.scenario = '';
     });
   },
 };

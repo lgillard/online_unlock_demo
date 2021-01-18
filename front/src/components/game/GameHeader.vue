@@ -4,8 +4,9 @@
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
       <b-navbar-brand>
-        <div v-b-tooltip:hover class="mb-2 h2 d-inline-block power pointer" title="Quitter la partie" @click="quitGame">
+        <div v-b-modal.quit-game-modal v-b-tooltip:hover class="mb-2 h2 d-inline-block power pointer" title="Quitter la partie">
           <b-icon-power/>
+          <LeaveGameModal :socket="socket" @quitWithoutSave="quitWithoutSave" @saveAndQuit="saveAndQuit"/>
         </div>
         Tutoriel
       </b-navbar-brand>
@@ -46,18 +47,22 @@
 
 <script>
 
-import DiscardModal  from '@/components/discardExplorer/DiscardModal';
-import GameHelpModal from '@/components/game/GameHelpModal';
-import PickModal     from '@/components/pickExplorer/PickModal';
-import io            from 'socket.io-client';
+import DiscardModal   from '@/components/discardExplorer/DiscardModal';
+import GameHelpModal  from '@/components/game/GameHelpModal';
+import LeaveGameModal from '@/components/game/LeaveGameModal';
+import PickModal      from '@/components/pickExplorer/PickModal';
+import io             from 'socket.io-client';
 
 export default {
-  name:       'GameHeader', components: { GameHelpModal, PickModal, DiscardModal }, props: {
+  name:       'GameHeader', components: { LeaveGameModal, GameHelpModal, PickModal, DiscardModal }, props: {
     socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
   }, methods: {
-    quitGame()
+    quitWithoutSave()
     {
-      this.$emit('quitGame');
+      this.socket.emit('ABANDON_CURRENT_GAME');
+    }, saveAndQuit()
+    {
+      // TODO: redirect to a page that show user his in progress scenario
     },
   },
 };

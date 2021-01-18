@@ -57,19 +57,31 @@ const scenarii = {
 
 };
 
-var cardsOnBoard   = [];
-var cardsOnPick    = [];
-var cardsOnDiscard = [];
+let cardsOnBoard       = [];
+let cardsOnPick        = [];
+let cardsOnDiscard     = [];
+let scenarioInProgress = '';
 
 io.on('connection', function(socket)
 {
-	scenario = '';
+	if (scenarioInProgress !== '')
+	{
+		socket.emit('SCENARIO_IN_PROGRESS', scenarioInProgress);
+		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
+	}
+
+	socket.on('ABANDON_CURRENT_GAME', () =>
+	{
+		scenarioInProgress = '';
+		socket.emit('ABANDON_CURRENT_GAME');
+	});
+
 	socket.on('SCENARIO_CHOSEN', scenarioChosen =>
 	{
-		scenario = scenarioChosen;
+		scenarioInProgress = scenarioChosen;
 		if (!hasBeenInit())
 		{
-			cardsOnPick  = scenarii[scenario];
+			cardsOnPick  = scenarii[scenarioInProgress];
 			cardsOnBoard = [{ x: 100, y: 100, name: 'start', isBack: true, position: 1 }];
 		}
 		socket.emit('CARD_STACKS', { cardsOnBoard: cardsOnBoard, cardsOnPick: cardsOnPick, cardsOnDiscard: cardsOnDiscard });
