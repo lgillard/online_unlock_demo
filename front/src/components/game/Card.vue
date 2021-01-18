@@ -67,12 +67,10 @@ export default {
   }, methods:  {
     turnLeft()
     {
-      this.card.rotation = (this.card.rotation - 90 + 360) % 360;
-      this.socket.emit('CARD_MOVED', this.card);
+      this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: - 90 });
     }, turnRight()
     {
-      this.card.rotation = (this.card.rotation + 90 + 360) % 360;
-      this.socket.emit('CARD_MOVED', this.card);
+      this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: 90 });
     }, emitCardClickEvent(e)
     {
       e.preventDefault();
@@ -142,6 +140,10 @@ export default {
   {
     const _this = this;
 
+    this.socket.on('CARD_' + this.card.name + '_TURN', rotation =>
+    {
+      _this.card.rotation = rotation;
+    });
     this.socket.on('CARD_RETURNED_' + this.card.name, isBack =>
     {
       _this.card.isBack = isBack;

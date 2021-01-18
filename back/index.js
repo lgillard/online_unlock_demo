@@ -131,7 +131,7 @@ io.on('connection', function(socket)
 		moveCardIntoStack(cardsOnDiscard, cardsOnBoard, cardName);
 	});
 
-	socket.on('CARD_MOVED', ({ name, x, y, isBack, position, rotation }) =>
+	socket.on('CARD_MOVED', ({ name, x, y, position }) =>
 	{
 		for (const card of cardsOnBoard)
 		{
@@ -139,8 +139,6 @@ io.on('connection', function(socket)
 			{
 				card.x        = x;
 				card.y        = y;
-				card.rotation = rotation;
-				card.isBack   = isBack;
 				card.position = cardsOnBoard.length;
 
 				io.emit('CARD_' + name + '_MOVED', card);
@@ -151,6 +149,18 @@ io.on('connection', function(socket)
 			}
 		}
 		io.emit('CARD_GO_FRONT', { name, position });
+	});
+
+	socket.on('CARD_ROTATE', ({ name, rotation }) =>
+	{
+		for (const card of cardsOnBoard)
+		{
+			if (card.name === name)
+			{
+				card.rotation = (rotation + card.rotation + 360) % 360;
+				io.emit('CARD_' + name + '_TURN', card.rotation);
+			}
+		}
 	});
 });
 
