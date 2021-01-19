@@ -1,6 +1,13 @@
 <template>
   <div>
-    <img v-for="scenario of scenarii" :key="scenario" :src="getSrc(scenario)" class="pointer" height="300" width="200" @click="scenarioChosen(scenario)"/>
+    <h2>Bonjour et bienvenue sur l'application unlock en ligne !</h2>
+    <p>
+      <a href="https://play.google.com/store/apps/details?id=com.spacecowboys.unlocks01&hl=fr&gl=US">Télécharger l'application mobile</a>
+      puis sélectionnez le scénario de votre choix
+    </p>
+    <div>
+      <img v-for="scenario of scenarii" :key="scenario" :src="getSrc(scenario)" class="pointer" height="300" width="200" @click="scenarioChosen(scenario)"/>
+    </div>
   </div>
 </template>
 

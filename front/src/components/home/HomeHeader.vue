@@ -3,7 +3,7 @@
     <b-navbar toggleable="sm" type="light" variant="light">
       <b-navbar-toggle target="nav-text-collapse"></b-navbar-toggle>
 
-      <b-navbar-brand>Bienvenue sur l'application Unlock Demo en ligne</b-navbar-brand>
+      <b-navbar-brand>Demo Unlock en ligne</b-navbar-brand>
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
