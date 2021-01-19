@@ -6,7 +6,15 @@
       puis sélectionnez le scénario de votre choix
     </p>
     <div>
-      <img v-for="scenario of scenarii" :key="scenario" :src="getSrc(scenario)" class="pointer" height="300" width="200" @click="scenarioChosen(scenario)"/>
+      <img v-for="scenario of scenarii"
+           :key="scenario"
+           v-b-tooltip:hover
+           :src="getSrc(scenario)"
+           :title="scenarioTitle(scenario)"
+           class="pointer"
+           height="300"
+           width="200"
+           @click="scenarioChosen(scenario)"/>
     </div>
   </div>
 </template>
@@ -27,6 +35,9 @@ export default {
     }, getSrc(scenario)
     {
       return '/assets/gameList/' + scenario + '/cover.JPG';
+    }, scenarioTitle(scenarioName)
+    {
+      return 'Lancer le scénario ' + scenarioName;
     },
   },
 };
