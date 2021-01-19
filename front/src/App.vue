@@ -24,7 +24,7 @@ export default {
   }, data()
   {
     return {
-      scenario: '', socket: io('localhost:3001'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] },
+      scenario: '', socket: io('192.168.1.15:3001'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] },
     };
   }, computed: {
     scenarioHasBeenSelected()
