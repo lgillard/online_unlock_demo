@@ -10,7 +10,8 @@ export default {
   {
     return {
       scenarii: ['demo',
-                 'christmas'],
+                 'christmas',
+                 'spirou'],
     };
   }, methods: {
     scenarioChosen(scenario)
