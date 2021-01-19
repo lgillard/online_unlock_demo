@@ -15,7 +15,7 @@
         <!-- Left part -->
         <b-navbar-nav>
           <!-- TODO: use variable for boardgames box value -->
-          <b-nav-text>Boite de jeu : Tutoriel</b-nav-text>
+          <b-nav-text>Boite de jeu : Demo Adventure</b-nav-text>
         </b-navbar-nav>
 
         <!-- Right part -->
