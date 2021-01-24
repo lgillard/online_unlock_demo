@@ -51,11 +51,10 @@ import DiscardModal   from '@/components/discardExplorer/DiscardModal';
 import GameHelpModal  from '@/components/game/GameHelpModal';
 import LeaveGameModal from '@/components/game/LeaveGameModal';
 import PickModal      from '@/components/pickExplorer/PickModal';
-import io             from 'socket.io-client';
 
 export default {
   name:       'GameHeader', components: { LeaveGameModal, GameHelpModal, PickModal, DiscardModal }, props: {
-    socket: io('localhost:3001'), pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
+    socket: { required: true }, pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
   }, methods: {
     quitWithoutSave()
     {

@@ -24,7 +24,7 @@ export default {
   }, data()
   {
     return {
-      scenario: '', socket: io('http://localhost:3001/'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] },
+      scenario: '', socket: io('https://catnip-jagged-catshark.glitch.me/'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] },
     };
   }, computed: {
     scenarioHasBeenSelected()
