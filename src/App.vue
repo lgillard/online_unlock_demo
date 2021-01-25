@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HomeHeader v-if="!scenarioHasBeenSelected"/>
+    <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket"/>
     <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket" @quitGame="quitGame"/>
     <main>
       <HomeContent v-if="!scenarioHasBeenSelected" @scenarioChosen="scenarioChosen"/>
