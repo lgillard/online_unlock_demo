@@ -77,7 +77,7 @@ export default {
       this.$emit('cardClicked');
     }, _getImgUrl(imgName)
     {
-      return '/assets/gameList/' + this.scenario + '/' + imgName + '.JPG';
+      return './assets/gameList/' + this.scenario + '/' + imgName + '.JPG';
     }, returnCard(e)
     {
       e.preventDefault();

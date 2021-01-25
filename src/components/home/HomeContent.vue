@@ -35,7 +35,7 @@ export default {
       this.$emit('scenarioChosen', scenario);
     }, getSrc(scenario)
     {
-      return '/assets/gameList/' + scenario + '/cover.JPG';
+      return './assets/gameList/' + scenario + '/cover.JPG';
     }, scenarioTitle(scenarioName)
     {
       return 'Lancer le scénario ' + scenarioName;
