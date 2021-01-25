@@ -1,7 +1,7 @@
 <template>
-  <b-modal id="quit-game-modal" cancel-title="Quitter sans sauvegarder" ok-title="Sauvegarder la partie" size="xl" @cancel="quitWithoutSave" @ok="saveAndQuit">
-    <h2>Souhaitez-vous abandonner la partie ou la sauvegarder pour y rejouer plus tard</h2>
-    <p>En cliquant sur "Quitter sans sauvegarder" vous stoppez et supprimer le jeu en cours pour tous les participants</p>
+  <b-modal id="quit-game-modal" ok-only ok-title="Abandonner la partie" size="xl" @ok="quitWithoutSave">
+    <h2>Souhaitez-vous quitter le jeu ? Tout retour à la partie en cours sera alors impossible</h2>
+    <p>En cliquant sur "Abandonner la partie" vous stoppez et supprimer le jeu en cours pour tous les participants</p>
   </b-modal>
 </template>
 
