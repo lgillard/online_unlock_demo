@@ -1,8 +1,13 @@
 <template>
   <div>
     <h2>Bonjour et bienvenue sur l'application unlock en ligne !</h2>
+    <p>Ce site vous permet de jouer à des escape-game de
+      <a href="https://www.spacecowboys.fr/">Space Cowboy</a>
+       avec des personnes loin de chez vous
+    </p>
     <p>
-      <a href="https://play.google.com/store/apps/details?id=com.spacecowboys.unlocks01&hl=fr&gl=US">Télécharger l'application mobile</a>
+      Pour jouer,
+      <a href="https://play.google.com/store/apps/details?id=com.spacecowboys.unlocks01&hl=fr&gl=US">télécharger l'application mobile</a>
       puis sélectionnez le scénario de votre choix
     </p>
     <div>
