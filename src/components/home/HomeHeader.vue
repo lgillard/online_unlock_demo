@@ -7,11 +7,11 @@
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>
-          <!-- Friend code -->
+          <!-- Party code -->
           <b-nav-item>
             <div class="row">
-              <label class="col-6 m-auto" for="friend-code">Code partie :</label>
-              <b-form-input id="friend-code" v-model="friendCode" class="col-6" @keydown="friendCodeKeyDown" @keyup="friendCodeKeyUp"/>
+              <label class="col-6 m-auto" for="party-code">Code partie :</label>
+              <b-form-input id="party-code" v-model="partyCode" class="col-6" @keydown="partyCodeKeyDown" @keyup="partyCodeKeyUp"/>
             </div>
           </b-nav-item>
         </b-navbar-nav>
@@ -34,17 +34,17 @@ import HomeHelpModal from '@/components/home/HomeHelpModal';
 export default {
   name:       'HomeHeader', components: { HomeHelpModal }, props: { socket: { required: true } }, data()
   {
-    return { friendCode: '', typingTimer: null, doneTypingInterval: 3000 };
+    return { partyCode: '', typingTimer: null, doneTypingInterval: 3000 };
   }, mounted()
   {
     const tempCode = localStorage.getItem('PARTY_CODE');
     if (tempCode !== undefined)
     {
-      this.friendCode = tempCode;
+      this.partyCode = tempCode;
     }
     else
     {
-      this.friendCode = this.generateCode();
+      this.partyCode = this.generateCode();
     }
     this.updPartyCode();
   }, methods: {
@@ -58,17 +58,17 @@ export default {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
       return result;
-    }, friendCodeKeyUp()
+    }, partyCodeKeyUp()
     {
       clearTimeout(this.typingTimer);
       this.typingTimer = setTimeout(this.updPartyCode, this.doneTypingInterval);
-    }, friendCodeKeyDown()
+    }, partyCodeKeyDown()
     {
       clearTimeout(this.typingTimer);
     }, updPartyCode()
     {
-      this.socket.emit('UPD_PARTY_CODE', { newPartyCode: this.friendCode, saveParty: false });
-      localStorage.setItem('PARTY_CODE', this.friendCode);
+      this.socket.emit('UPD_PARTY_CODE', { newPartyCode: this.partyCode, saveParty: false });
+      localStorage.setItem('PARTY_CODE', this.partyCode);
     },
   },
 };
