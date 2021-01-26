@@ -37,8 +37,16 @@ export default {
     return { friendCode: '', typingTimer: null, doneTypingInterval: 3000 };
   }, mounted()
   {
-    this.friendCode = this.generateCode();
-    this.socket.emit('UPD_PARTY_CODE', { newPartyCode: this.friendCode, saveParty: false });
+    const tempCode = localStorage.getItem('PARTY_CODE');
+    if (tempCode !== undefined)
+    {
+      this.friendCode = tempCode;
+    }
+    else
+    {
+      this.friendCode = this.generateCode();
+    }
+    this.updPartyCode();
   }, methods: {
     generateCode()
     {
@@ -53,13 +61,14 @@ export default {
     }, friendCodeKeyUp()
     {
       clearTimeout(this.typingTimer);
-      this.typingTimer = setTimeout(this.doneTyping, this.doneTypingInterval);
+      this.typingTimer = setTimeout(this.updPartyCode, this.doneTypingInterval);
     }, friendCodeKeyDown()
     {
       clearTimeout(this.typingTimer);
-    }, doneTyping()
+    }, updPartyCode()
     {
       this.socket.emit('UPD_PARTY_CODE', { newPartyCode: this.friendCode, saveParty: false });
+      localStorage.setItem('PARTY_CODE', this.friendCode);
     },
   },
 };
