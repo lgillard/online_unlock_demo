@@ -18,6 +18,19 @@
     </details>
 
     <details>
+      <summary><h2>Jouer avec un/des amis</h2></summary>
+      <div class="ml-4">
+        <p>Si vous souhaitez jouer en équipe il vous suffit de modifier votre "code partie" afin d'avoir le même que vos amis. Ceux code se trouve en haut de la page.</p>
+        <div>
+          <p>
+            <span class="font-weight-bold">Bonus :</span>
+            Vous pouvez choisir le code que vous souhaitez. Cependant attention à ne pas prendre un mot trop générique pour ne pas vous retrouver dans la partie d'inconnus.
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <details>
       <summary><h2>Choix de la difficulté</h2></summary>
       <div>
         <p>
