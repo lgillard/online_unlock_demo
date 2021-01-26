@@ -38,7 +38,7 @@ export default {
   }, mounted()
   {
     const tempCode = localStorage.getItem('PARTY_CODE');
-    if (tempCode !== undefined)
+    if (tempCode !== undefined && tempCode !== null)
     {
       this.partyCode = tempCode;
     }
