@@ -70,11 +70,11 @@ export default {
 h2
 {
   display:   inline;
-  font-size: 7vh;
+  font-size: 2vw;
 }
 
 h3
 {
-  font-size: 5vh;
+  font-size: 1.5vw;
 }
 </style>
