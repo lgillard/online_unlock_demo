@@ -1,24 +1,24 @@
 <template>
   <b-modal id="help-modal" ok-only size="xl">
-    <h2>Guide d'utilisation</h2>
+    <h1>Guide d'utilisation</h1>
 
-    <div>
-      <h3>Commencer le jeu</h3>
+    <details>
+      <summary><h2>Commencer le jeu</h2></summary>
       <div class="ml-4">
-        <h4>Première fois ?</h4>
+        <h3>Première fois ?</h3>
         <p>Si vous n'avez jamais joué sur unlock demo en ligne, cliquez sur l'image "tutoriel" sur l'interface</p>
       </div>
       <div class="ml-4">
-        <h4>Déjà joué ?</h4>
+        <h3>Déjà joué ?</h3>
         <p>Choisissez votre scénario en fonction de la difficulté souhaitée (voir nombre de cadenas
           <b-icon-lock-fill/>
            ), puis cliquez sur l'image.
         </p>
       </div>
-    </div>
+    </details>
 
-    <div>
-      <h3>Choix de la difficulté</h3>
+    <details>
+      <summary><h2>Choix de la difficulté</h2></summary>
       <div>
         <p>
           Il existe trois niveaux de difficulté. <br> Pour un maximum d'amusement il est conseillé de bien choisir son niveau. Une partie trop complexe n'est jamais agréable. </p>
@@ -43,7 +43,7 @@
           </li>
         </ul>
       </div>
-    </div>
+    </details>
   </b-modal>
 </template>
 
@@ -54,5 +54,14 @@ export default {
 </script>
 
 <style scoped>
+h2
+{
+  display:   inline;
+  font-size: 7vh;
+}
 
+h3
+{
+  font-size: 5vh;
+}
 </style>
