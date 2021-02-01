@@ -19,7 +19,7 @@
         <b-navbar-nav class="ml-auto">
           <!-- Help -->
           <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
-            <b-icon-question-circle class="mr-3"/>
+            <b-icon-question-circle animation="cylon-vertical" class="mr-3"/>
             <HomeHelpModal/>
           </b-nav-item>
         </b-navbar-nav>

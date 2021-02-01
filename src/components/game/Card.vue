@@ -1,17 +1,20 @@
 <template>
   <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
-    <div v-if="draggable" class="toolbar h2 mb-2 icon-container container">
-      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
-        <b-icon-arrow-bar-up/>
+    <div v-if="draggable" :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
+      <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
+        <b-icon-front/>
+      </div>
+      <!--      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">-->
+      <!--        <b-icon-arrow-counterclockwise/>-->
+      <!--      </div>-->
+      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
+        <b-icon-arrow-clockwise/>
       </div>
       <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
         <b-icon-trash/>
       </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">
-        <b-icon-arrow-counterclockwise/>
-      </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
-        <b-icon-arrow-clockwise/>
+      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
+        <b-icon-arrow-bar-up/>
       </div>
     </div>
     <div :style="getWidthHeight">
@@ -20,7 +23,10 @@
            :style="getRotation"
            alt="Start card"
            class="card-width grab m-0"
-           @click="e => {returnAllowed ? returnCard(e) : emitCardClickEvent(e)}"/>
+           @click="click"
+           @touchend="touchEnd"
+           @touchmove="touchMove"
+           @touchstart="e => e.preventDefault"/>
     </div>
   </div>
 </template>
@@ -36,6 +42,9 @@ export default {
                  };
                },
     },
+  }, data()
+  {
+    return { lastMove: null, displayToolBar: false };
   }, computed: {
     isTurned()
     {
@@ -65,9 +74,44 @@ export default {
       return rotateStyle + (this.isTurned ? 'margin-top: -110px !important;' : '');
     },
   }, methods:  {
-    turnLeft()
+    click(event)
     {
-      this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: - 90 });
+      event.preventDefault();
+      if (this.returnAllowed)
+      {
+        this.returnCard(event);
+      }
+      else
+      {
+        this.emitCardClickEvent(event);
+      }
+    }, touchEnd(event)
+    {
+      event.preventDefault();
+
+      if (!this.returnAllowed)
+      {
+        this.emitCardClickEvent(event);
+        return;
+      }
+
+      if (this.lastMove !== null)
+      {
+        this.touchDrop(event);
+      }
+      else
+      {
+        this.showToolBar();
+      }
+      this.lastMove = null;
+    }, showToolBar()
+    {
+      this.displayToolBar = true;
+      const _this         = this;
+      setTimeout(() =>
+                 {
+                   _this.displayToolBar = false;
+                 }, 2000);
     }, turnRight()
     {
       this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: 90 });
@@ -124,6 +168,27 @@ export default {
           _this.socket.emit('CARD_MOVED', _this.card);
         }
       }, false);
+    }, touchDrop()
+    {
+      if (this.draggable)
+      {
+        this.socket.emit('CARD_MOVED', this.card);
+      }
+    }, touchMove(event)
+    {
+      event.preventDefault();
+      if (this.draggable)
+      {
+        this.lastMove = event;
+
+        const height = !this.isTurned ? 270 : 450;
+        const width  = !this.isTurned ? 450 : 270;
+
+        // move dragged elem to the selected drop target
+        this.card.x        = this.lastMove.touches[0].clientX + window.scrollX - height / 2;
+        this.card.y        = this.lastMove.touches[0].clientY + window.scrollY - width / 2;
+        this.card.position = this.nbTotalCards;
+      }
     }, _updXYcardPosition(event)
     {
       // prevent default to allow drop
