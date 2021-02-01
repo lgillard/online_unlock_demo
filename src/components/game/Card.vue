@@ -1,15 +1,18 @@
 <template>
   <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
     <div v-if="draggable" :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
+      <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
+        <b-icon-front/>
+      </div>
       <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
         <b-icon-arrow-bar-up/>
       </div>
       <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
         <b-icon-trash/>
       </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">
-        <b-icon-arrow-counterclockwise/>
-      </div>
+      <!--      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">-->
+      <!--        <b-icon-arrow-counterclockwise/>-->
+      <!--      </div>-->
       <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
         <b-icon-arrow-clockwise/>
       </div>
@@ -109,9 +112,6 @@ export default {
                  {
                    _this.displayToolBar = false;
                  }, 2000);
-    }, turnLeft()
-    {
-      this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: - 90 });
     }, turnRight()
     {
       this.socket.emit('CARD_ROTATE', { name: this.card.name, rotation: 90 });
