@@ -1,30 +1,41 @@
 <template>
   <div id="app">
-    <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket"/>
-    <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket" @quitGame="quitGame"/>
-    <main>
-      <HomeContent v-if="!scenarioHasBeenSelected" @scenarioChosen="scenarioChosen"/>
-      <Board v-else :cards="board" :scenario="scenario" :socket="socket"/>
-    </main>
-    <Footer/>
+    <b-overlay :show="displayGuide" opacity="0.95" variant="dark">
+      <template #overlay>
+        <WelcomeExplanations @guideReadEnd="closeGuide()"></WelcomeExplanations>
+      </template>
+      <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket"/>
+      <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket" @quitGame="quitGame"/>
+      <main>
+        <HomeContent v-if="!scenarioHasBeenSelected" @scenarioChosen="scenarioChosen"/>
+        <Board v-else :cards="board" :scenario="scenario" :socket="socket"/>
+      </main>
+      <Footer/>
+    </b-overlay>
   </div>
 </template>
 
 <script>
-import Footer      from '@/components/Footer';
-import Board       from '@/components/game/Board';
-import GameHeader  from '@/components/game/GameHeader';
-import HomeContent from '@/components/home/HomeContent';
-import HomeHeader  from '@/components/home/HomeHeader';
-import io          from 'socket.io-client';
+import Footer              from '@/components/Footer';
+import Board               from '@/components/game/Board';
+import GameHeader          from '@/components/game/GameHeader';
+import HomeContent         from '@/components/home/HomeContent';
+import HomeHeader          from '@/components/home/HomeHeader';
+import WelcomeExplanations from '@/components/home/WelcomeExplanations';
+import io                  from 'socket.io-client';
 
 export default {
   name:        'App', components: {
-    HomeContent, HomeHeader, Board, Footer, GameHeader,
+    WelcomeExplanations, HomeContent, HomeHeader, Board, Footer, GameHeader,
   }, data()
   {
     return {
-      scenario: '', socket: io('https://catnip-jagged-catshark.glitch.me/'), pick: { default: () => [] }, board: { default: () => [] }, discard: { default: () => [] },
+      displayGuide: true,
+      scenario:     '',
+      socket:       io('https://catnip-jagged-catshark.glitch.me/'),
+      pick:         { default: () => [] },
+      board:        { default: () => [] },
+      discard:      { default: () => [] },
     };
   }, computed: {
     scenarioHasBeenSelected()
@@ -38,13 +49,17 @@ export default {
     }, quitGame()
     {
       this.socket.emit('ABANDON_CURRENT_GAME');
+    }, closeGuide()
+    {
+      this.displayGuide = false;
     },
   }, mounted()
   {
     const _this = this;
     this.socket.on('SCENARIO_IN_PROGRESS', scenario =>
     {
-      _this.scenario = scenario;
+      _this.scenario     = scenario;
+      _this.displayGuide = false;
     });
     this.socket.on('CARD_STACKS', data =>
     {
