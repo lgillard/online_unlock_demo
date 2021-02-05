@@ -4,9 +4,6 @@
       <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
         <b-icon-front/>
       </div>
-      <!--      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à gauche" @click="turnLeft">-->
-      <!--        <b-icon-arrow-counterclockwise/>-->
-      <!--      </div>-->
       <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
         <b-icon-arrow-clockwise/>
       </div>
@@ -19,7 +16,7 @@
     </div>
     <div :style="getWidthHeight">
       <img :id="card.name"
-           :src="card.isBack ? backImgSrc : imgSrc"
+           :src="src"
            :style="getRotation"
            alt="Start card"
            class="card-width grab m-0"
@@ -46,18 +43,29 @@ export default {
   {
     return { lastMove: null, displayToolBar: false };
   }, computed: {
-    isTurned()
+    height()
+    {
+      return this.isTurned ? 270 : 450;
+    }, width()
+    {
+      return this.isTurned ? 450 : 270;
+    }, src()
+    {
+      return './assets/gameList/' + this.scenario + '/' + (this.card.isBack ? this.backName : this.frontName);
+    }, frontName()
+    {
+      return this.card.name + '.JPG';
+    }, backName()
+    {
+      return this.card.name + '_back.JPG';
+    }, isTurned()
     {
       return (this.card.rotation % 180) !== 0;
     }, getWidthHeight()
     {
-      return !this.isTurned ? 'width: 270px; height: 490px;' : 'height: 270px; width: 490px;';
-    }, backImgSrc()
-    {
-      return this._getImgUrl(this.card.name + '_back');
-    }, imgSrc()
-    {
-      return this._getImgUrl(this.card.name);
+      const height = this.height === 450 ? this.height + 40 : this.height;
+      const width  = this.width === 450 ? this.width + 40 : this.width;
+      return 'width:' + width + 'px; height: ' + height + 'px;';
     }, getXYStyle()
     {
       if (this.draggable)
@@ -70,8 +78,13 @@ export default {
       return 'z-index: ' + (100 + this.card.position) + ';';
     }, getRotation()
     {
-      const rotateStyle = '-webkit-transform: rotate(' + this.card.rotation + 'deg); -moz-transform: rotate(' + this.card.rotation + 'deg); -o-transform: rotate(' + this.card.rotation + 'deg); -ms-transform: rotate(' + this.card.rotation + 'deg); transform: rotate(' + this.card.rotation + 'deg);';
-      return rotateStyle + (this.isTurned ? 'margin-top: -110px !important;' : '');
+      let rotateStyle = '-webkit-transform: rotate(' + this.card.rotation + 'deg);';
+      rotateStyle += '-moz-transform: rotate(' + this.card.rotation + 'deg);';
+      rotateStyle += '-o-transform: rotate(' + this.card.rotation + 'deg);';
+      rotateStyle += '-ms-transform: rotate(' + this.card.rotation + 'deg);';
+      rotateStyle += 'transform: rotate(' + this.card.rotation + 'deg);';
+      rotateStyle += (this.isTurned ? 'margin-top: -110px !important;' : '');
+      return rotateStyle;
     },
   }, methods:  {
     click(event)
@@ -119,9 +132,6 @@ export default {
     {
       e.preventDefault();
       this.$emit('cardClicked');
-    }, _getImgUrl(imgName)
-    {
-      return './assets/gameList/' + this.scenario + '/' + imgName + '.JPG';
     }, returnCard(e)
     {
       e.preventDefault();
@@ -155,7 +165,9 @@ export default {
       {
         if (cardDraggedId === _this.card.name)
         {
-          _this._updXYcardPosition(event);
+          event.preventDefault();
+          _this.card.x = event.x + window.scrollX - _this.width / 2;
+          _this.card.y = event.y + window.scrollY - _this.height / 2;
         }
       }, false);
 
@@ -163,7 +175,9 @@ export default {
       {
         if (cardDraggedId === _this.card.name)
         {
-          _this._updXYcardPosition(event);
+          event.preventDefault();
+          _this.card.x        = event.x + window.scrollX - _this.width / 2;
+          _this.card.y        = event.y + window.scrollY - _this.height / 2;
           _this.card.position = oldPos;
           _this.socket.emit('CARD_MOVED', _this.card);
         }
@@ -179,27 +193,11 @@ export default {
       event.preventDefault();
       if (this.draggable)
       {
-        this.lastMove = event;
-
-        const height = !this.isTurned ? 270 : 450;
-        const width  = !this.isTurned ? 450 : 270;
-
-        // move dragged elem to the selected drop target
-        this.card.x        = this.lastMove.touches[0].clientX + window.scrollX - height / 2;
-        this.card.y        = this.lastMove.touches[0].clientY + window.scrollY - width / 2;
+        this.lastMove      = event;
+        this.card.x        = this.lastMove.touches[0].clientX + window.scrollX - this.width / 2;
+        this.card.y        = this.lastMove.touches[0].clientY + window.scrollY - this.height / 2;
         this.card.position = this.nbTotalCards;
       }
-    }, _updXYcardPosition(event)
-    {
-      // prevent default to allow drop
-      event.preventDefault();
-
-      const height = !this.isTurned ? 270 : 450;
-      const width  = !this.isTurned ? 450 : 270;
-
-      // move dragged elem to the selected drop target
-      this.card.x = event.x + window.scrollX - height / 2;
-      this.card.y = event.y + window.scrollY - width / 2;
     },
   }, mounted()
   {
@@ -217,13 +215,6 @@ export default {
     {
       // TODO: find another way to upd card (create error in explorer console)
       _this.card = card;
-    });
-    this.socket.on('CARD_GO_FRONT', ({ name, position }) =>
-    {
-      if (name !== _this.card.name && _this.card.position > position)
-      {
-        _this.card.position = _this.card.position - 1;
-      }
     });
   }, created()
   {
