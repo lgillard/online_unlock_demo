@@ -13,10 +13,18 @@
 
       <b-collapse id="nav-text-collapse" is-nav>
         <b-navbar-nav>
-          <!-- TODO: use variable for boardgames box value -->
           <b-nav-item href="https://www.spacecowboys.fr/">Retrouver d'autres jeux SPACE Cowboys</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
+      <b-navbar-nav class="ml-auto">
+        <!-- Found other scenarii -->
+        <b-nav-item href="https://www.spacecowboys.fr/unlock">
+          <img alt="Trouver d'autres scénarii de jeu Unlock!"
+               src="https://alloescape.fr/wp-content/uploads/2019/04/avis-jeu-soci%C3%A9t%C3%A9-escape-game-unlock-4.png"
+               style="height: 56px; object-fit: cover;">
+          Trouver d'autres scénarii de jeu Unlock!
+        </b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
   </footer>
 </template>
