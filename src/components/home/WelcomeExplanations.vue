@@ -48,7 +48,7 @@
 export default {
   name:       'WelcomeExplanations', data()
   {
-    return { mouseImgSrc: './assets/mouse.png', partyCodeSrc: './assets/partyCode.png', nbTexts: 6, currentTextIndex: 0 };
+    return { mouseImgSrc: './assets/mouse.png', nbTexts: 6, currentTextIndex: 0 };
   }, methods: {
     next()
     {

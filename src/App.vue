@@ -2,9 +2,10 @@
   <div id="app">
     <b-overlay :show="displayGuide" opacity="0.95" variant="dark">
       <template #overlay>
-        <WelcomeExplanations @guideReadEnd="closeGuide()"></WelcomeExplanations>
+        <WelcomeExplanations v-if="guideType === 'WELCOME'" @guideReadEnd="closeGuide()"></WelcomeExplanations>
+        <HomeHelp v-if="guideType === 'HOME'" @guideReadEnd="closeGuide()"></HomeHelp>
       </template>
-      <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket"/>
+      <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket" @openHomeHelp="openHomeHelp"/>
       <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket" @quitGame="quitGame"/>
       <main>
         <HomeContent v-if="!scenarioHasBeenSelected" @scenarioChosen="scenarioChosen"/>
@@ -21,16 +22,18 @@ import Board               from '@/components/game/Board';
 import GameHeader          from '@/components/game/GameHeader';
 import HomeContent         from '@/components/home/HomeContent';
 import HomeHeader          from '@/components/home/HomeHeader';
+import HomeHelp            from '@/components/home/HomeHelp';
 import WelcomeExplanations from '@/components/home/WelcomeExplanations';
 import io                  from 'socket.io-client';
 
 export default {
   name:        'App', components: {
-    WelcomeExplanations, HomeContent, HomeHeader, Board, Footer, GameHeader,
+    WelcomeExplanations, HomeContent, HomeHeader, Board, Footer, GameHeader, HomeHelp,
   }, data()
   {
     return {
       displayGuide: true,
+      guideType:    'WELCOME',
       scenario:     '',
       socket:       io('https://catnip-jagged-catshark.glitch.me/'),
       pick:         { default: () => [] },
@@ -52,14 +55,21 @@ export default {
     }, closeGuide()
     {
       this.displayGuide = false;
+    }, openHomeHelp()
+    {
+      this.displayGuide = true;
+      this.guideType    = 'HOME';
     },
   }, mounted()
   {
     const _this = this;
     this.socket.on('SCENARIO_IN_PROGRESS', scenario =>
     {
-      _this.scenario     = scenario;
-      _this.displayGuide = false;
+      _this.scenario = scenario;
+      if (scenario !== '')
+      {
+        _this.displayGuide = false;
+      }
     });
     this.socket.on('CARD_STACKS', data =>
     {

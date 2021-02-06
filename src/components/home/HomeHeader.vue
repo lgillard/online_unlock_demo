@@ -18,7 +18,7 @@
 
         <b-navbar-nav class="ml-auto">
           <!-- Help -->
-          <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
+          <b-nav-item v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide" @click="emitHomeHelp">
             <b-icon-question-circle animation="cylon-vertical" class="mr-3"/>
             <HomeHelpModal/>
           </b-nav-item>
@@ -48,7 +48,10 @@ export default {
     }
     this.updPartyCode();
   }, methods: {
-    generateCode()
+    emitHomeHelp()
+    {
+      this.$emit('openHomeHelp');
+    }, generateCode()
     {
       let result           = '';
       let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
