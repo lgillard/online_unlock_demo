@@ -20,7 +20,6 @@
           <!-- Help -->
           <b-nav-item v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide" @click="emitHomeHelp">
             <b-icon-question-circle animation="cylon-vertical" class="mr-3"/>
-            <HomeHelpModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -29,10 +28,9 @@
 </template>
 
 <script>
-import HomeHelpModal from '@/components/home/HomeHelpModal';
 
 export default {
-  name:       'HomeHeader', components: { HomeHelpModal }, props: { socket: { required: true } }, data()
+  name:       'HomeHeader', props: { socket: { required: true } }, data()
   {
     return { partyCode: '', typingTimer: null, doneTypingInterval: 3000 };
   }, mounted()

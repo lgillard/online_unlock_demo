@@ -16,7 +16,8 @@
             <b-button class="max-size" @click="selectQuestion('DIFFICULTIES_INFO')">Je veux choisir une difficulté</b-button>
           </b-col>
           <b-col>
-            <b-button class="max-size" @click="quitHelp">Non, rien</b-button>
+            <b-button v-if="!alreadyQuestionned" class="max-size" @click="quitHelp">Non, rien</b-button>
+            <b-button v-else class="max-size" @click="quitHelp">Non, merci</b-button>
           </b-col>
         </b-row>
       </div>
@@ -96,9 +97,8 @@ export default {
   }, methods: {
     returnToHelpHome()
     {
-      this.question           = '';
-      this.sentenceIndex      = 0;
-      this.alreadyQuestionned = true;
+      this.question      = '';
+      this.sentenceIndex = 0;
     }, next()
     {
       this.sentenceIndex ++;
@@ -127,6 +127,7 @@ export default {
         default:
           break;
       }
+      this.alreadyQuestionned = true;
     }, quitHelp()
     {
       this.$emit('guideReadEnd');
