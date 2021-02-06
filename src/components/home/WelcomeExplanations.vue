@@ -1,5 +1,8 @@
 <template>
   <div class="guide-container">
+    <div v-b-tooltip.hover class="pointer" title="Fermer le guide" @click="closeGuide">
+      <b-icon-x class="close-cross" variant="light"/>
+    </div>
     <img :src="mouseImgSrc" alt="Mouse guide" class="pointer" @click="next"/>
     <div class="bubble bubble-bottom-left">
       <div>
@@ -55,11 +58,14 @@ export default {
       this.currentTextIndex ++;
       if (this.currentTextIndex >= this.nbTexts)
       {
-        this.$emit('guideReadEnd');
+        this.closeGuide();
       }
     }, previous()
     {
       this.currentTextIndex --;
+    }, closeGuide()
+    {
+      this.$emit('guideReadEnd');
     },
   },
 };
@@ -122,5 +128,14 @@ img
   width:    fit-content;
   position: absolute;
   left:     4vw;
+}
+
+.close-cross
+{
+  position: absolute;
+  right:    0%;
+  top:      0%;
+  width:    10vh;
+  height:   10vh;
 }
 </style>
