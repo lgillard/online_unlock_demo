@@ -35,9 +35,8 @@
           </b-nav-item>
 
           <!-- Help -->
-          <b-nav-item v-b-modal.help-modal v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide">
+          <b-nav-item v-b-tooltip.hover class="help h5 mb-2" title="Obtenir de l'aide" @click="emitOpenHelp">
             <b-icon-question-circle animation="cylon-vertical" class="mr-3"/>
-            <GameHelpModal/>
           </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
@@ -48,12 +47,11 @@
 <script>
 
 import DiscardModal   from '@/components/discardExplorer/DiscardModal';
-import GameHelpModal  from '@/components/game/GameHelpModal';
 import LeaveGameModal from '@/components/game/LeaveGameModal';
 import PickModal      from '@/components/pickExplorer/PickModal';
 
 export default {
-  name:       'GameHeader', components: { LeaveGameModal, GameHelpModal, PickModal, DiscardModal }, props: {
+  name:       'GameHeader', components: { LeaveGameModal, PickModal, DiscardModal }, props: {
     socket: { required: true }, pick: { default: () => [] }, discard: { default: () => [] }, scenario: { default: 'demo' },
   }, methods: {
     quitWithoutSave()
@@ -62,6 +60,9 @@ export default {
     }, saveAndQuit()
     {
       // TODO: redirect to a page that show user his in progress scenario
+    }, emitOpenHelp()
+    {
+      this.$emit('openGameHelp');
     },
   },
 };
