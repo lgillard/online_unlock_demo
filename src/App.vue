@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <b-overlay :show="displayGuide" opacity="0.95" variant="dark" z-index="500">
+    <b-overlay :show="guideType !== ''" opacity="0.95" variant="dark" z-index="500">
       <template #overlay>
         <WelcomeExplanations v-if="guideType === 'WELCOME'" @guideReadEnd="closeGuide()"></WelcomeExplanations>
         <HomeHelp v-if="guideType === 'HOME'" @guideReadEnd="closeGuide()"></HomeHelp>
         <GameHelp v-if="guideType === 'GAME'" @guideReadEnd="closeGuide()"></GameHelp>
+        <StartGameWelcome v-if="guideType === 'WELCOME_GAME'" :scenario="scenario" @guideReadEnd="closeGuide()"></StartGameWelcome>
       </template>
       <HomeHeader v-if="!scenarioHasBeenSelected" :socket="socket" @openHomeHelp="() => this.openHelp('HOME')"/>
       <GameHeader v-else :discard="discard" :pick="pick" :scenario="scenario" :socket="socket" @openGameHelp="() => this.openHelp('GAME')" @quitGame="quitGame"/>
@@ -22,6 +23,7 @@ import Footer              from '@/components/Footer';
 import Board               from '@/components/game/Board';
 import GameHeader          from '@/components/game/GameHeader';
 import GameHelp            from '@/components/game/GameHelp';
+import StartGameWelcome    from '@/components/game/StartGameWelcome';
 import HomeContent         from '@/components/home/HomeContent';
 import HomeHeader          from '@/components/home/HomeHeader';
 import HomeHelp            from '@/components/home/HomeHelp';
@@ -30,7 +32,7 @@ import io                  from 'socket.io-client';
 
 export default {
   name:        'App', components: {
-    WelcomeExplanations, HomeContent, HomeHeader, Board, Footer, GameHeader, HomeHelp, GameHelp,
+    WelcomeExplanations, HomeContent, HomeHeader, Board, Footer, GameHeader, HomeHelp, GameHelp, StartGameWelcome,
   }, data()
   {
     return {
@@ -56,11 +58,10 @@ export default {
       this.socket.emit('ABANDON_CURRENT_GAME');
     }, closeGuide()
     {
-      this.displayGuide = false;
+      this.guideType = '';
     }, openHelp(type)
     {
-      this.displayGuide = true;
-      this.guideType    = type;
+      this.guideType = type;
     },
   }, mounted()
   {
@@ -70,7 +71,7 @@ export default {
       _this.scenario = scenario;
       if (scenario !== '')
       {
-        _this.displayGuide = false;
+        _this.guideType = 'WELCOME_GAME';
       }
     });
     this.socket.on('CARD_STACKS', data =>
