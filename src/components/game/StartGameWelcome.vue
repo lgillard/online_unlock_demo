@@ -1,10 +1,10 @@
 <template>
   <div class="guide-container">
-    <div v-b-tooltip.hover class="pointer" title="Fermer le guide" @click="closeGuide">
+    <div v-b-tooltip.hover class="pointer close-cross-container" title="Fermer le guide" @click="closeGuide">
       <b-icon-x class="close-cross" variant="light"/>
     </div>
-    <img :src="mouseImgSrc" alt="Mouse guide" class="pointer" @click="next"/>
-    <div class="bubble bubble-bottom-left">
+    <img :src="mouseImgSrc" alt="Mouse guide" class="pointer mouse-recentre" @click="next"/>
+    <div class="bubble bubble-bottom-left bubble-recentre">
       <div>
         <div v-if="scenario === 'demo'">
           <p v-if="currentTextIndex === 0">Ah ! Je vois que vous avez choisi le tutoriel. <br>Vous semblez écouter mes conseils à la lettre !</p>
@@ -43,6 +43,7 @@
       </div>
       <div v-if="currentTextIndex > 0" class="previous-icon pointer" @click="previous">
         <b-icon-caret-left-fill></b-icon-caret-left-fill>
+        G
       </div>
       <div class="next-icon pointer" @click="next">
         <b-icon-caret-right-fill></b-icon-caret-right-fill>
@@ -146,5 +147,26 @@ img
   top:      0%;
   width:    10vh;
   height:   10vh;
+}
+
+.close-cross-container
+{
+  top:      -50%;
+  position: absolute;
+  right:    0%;
+}
+
+.mouse-recentre
+{
+  top:      -10%;
+  position: absolute;
+  right:    0%;
+}
+
+.bubble-recentre
+{
+  top:      -25%;
+  position: absolute;
+  right:    0%;
 }
 </style>
