@@ -185,7 +185,7 @@ img
 {
   position: fixed;
   top:      -50%;
-  left:     40%
+  left:     40%;
   width:    20vw;
   height:   auto;
 }
