@@ -4,14 +4,7 @@
       <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
         <b-icon-chevron-left/>
       </b-button>
-      <Card v-b-tooltip.hover
-            :card="currentCard"
-            :draggable="false"
-            :return-allowed="false"
-            :scenario="scenario"
-            :socket="socket"
-            title="Poser la carte sur la table"
-            @cardClicked="onCardClick"/>
+      <img :id="currentCard.name" :alt="'Card ' + currentCard.name" :src="currentCardSrc" class="card-width grab m-0" @click="onCardClick"/>
       <b-button v-b-tooltip.hover title="Carte suivante" variant="light" @click="next">
         <b-icon-chevron-right/>
       </b-button>
@@ -22,25 +15,25 @@
 </template>
 
 <script>
-import Card from '@/components/game/Card';
-
 export default {
-  name:        'Stack',
-  components:  { Card },
-  props:       { stackName: { default: 'pioche' }, cards: { default: () => [] }, socket: { required: true }, scenario: { default: 'demo' } },
+  name:  'Stack',
+  props: { stackName: { default: 'pioche' }, cards: { default: () => [] }, socket: { required: true }, scenario: { default: 'demo' }, cardsAreBack: { default: true } },
   data()
   {
     return {
       currentCardIndex: 0,
     };
   },
-  computed:    {
+  computed: {
     currentCard()
     {
       return this.cards[this.currentCardIndex];
+    }, currentCardSrc()
+    {
+      return './assets/gameList/' + this.scenario + '/' + this.currentCard.name + (this.cardsAreBack ? '_back' : '') + '.JPG';
     },
   },
-  methods:     {
+  methods:  {
     previous()
     {
       this.currentCardIndex = (this.currentCardIndex + this.cards.length - 1) % this.cards.length;
@@ -64,5 +57,11 @@ export default {
 .add-to-board
 {
   margin-top: 10px;
+}
+
+.card-width
+{
+  width:  215px;
+  height: 390px;
 }
 </style>

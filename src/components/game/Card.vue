@@ -1,6 +1,6 @@
 <template>
   <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
-    <div v-if="draggable" :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
+    <div :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
       <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
         <b-icon-front/>
       </div>
@@ -31,7 +31,7 @@
 <script>
 export default {
   name:        'Card', props: {
-    nbTotalCards: { default: 1 }, socket: { required: true }, draggable: { default: true }, returnAllowed: { default: true }, scenario: { default: 'demo' }, card: {
+    nbTotalCards: { default: 1 }, socket: { required: true }, scenario: { default: 'demo' }, card: {
       default: () =>
                {
                  return {
@@ -68,11 +68,7 @@ export default {
       return 'width:' + width + 'px; height: ' + height + 'px;';
     }, getXYStyle()
     {
-      if (this.draggable)
-      {
-        return 'left: ' + this.card.x + 'px;' + 'top: ' + this.card.y + 'px; position: absolute;';
-      }
-      return '';
+      return 'left: ' + this.card.x + 'px;' + 'top: ' + this.card.y + 'px; position: absolute;';
     }, getZIndex()
     {
       return 'z-index: ' + (100 + this.card.position) + ';';
@@ -90,23 +86,10 @@ export default {
     click(event)
     {
       event.preventDefault();
-      if (this.returnAllowed)
-      {
-        this.returnCard(event);
-      }
-      else
-      {
-        this.emitCardClickEvent(event);
-      }
+      this.returnCard(event);
     }, touchEnd(event)
     {
       event.preventDefault();
-
-      if (!this.returnAllowed)
-      {
-        this.emitCardClickEvent(event);
-        return;
-      }
 
       if (this.lastMove !== null)
       {
@@ -184,20 +167,15 @@ export default {
       }, false);
     }, touchDrop()
     {
-      if (this.draggable)
-      {
-        this.socket.emit('CARD_MOVED', this.card);
-      }
+      this.socket.emit('CARD_MOVED', this.card);
     }, touchMove(event)
     {
       event.preventDefault();
-      if (this.draggable)
-      {
-        this.lastMove      = event;
-        this.card.x        = this.lastMove.touches[0].clientX + window.scrollX - this.width / 2;
-        this.card.y        = this.lastMove.touches[0].clientY + window.scrollY - this.height / 2;
-        this.card.position = this.nbTotalCards;
-      }
+
+      this.lastMove      = event;
+      this.card.x        = this.lastMove.touches[0].clientX + window.scrollX - this.width / 2;
+      this.card.y        = this.lastMove.touches[0].clientY + window.scrollY - this.height / 2;
+      this.card.position = this.nbTotalCards;
     },
   }, mounted()
   {
