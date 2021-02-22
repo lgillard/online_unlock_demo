@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="search-discard-modal" ok-only>
+  <b-modal id="search-discard-modal" hide-footer>
     <h2>Rechercher dans la défausse</h2>
     <Discard :cards="cards" :scenario="scenario" :socket="socket"/>
   </b-modal>
