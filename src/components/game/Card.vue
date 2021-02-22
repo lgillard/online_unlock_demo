@@ -163,6 +163,7 @@ export default {
           _this.card.y        = event.y + window.scrollY - _this.height / 2;
           _this.card.position = oldPos;
           _this.socket.emit('CARD_MOVED', _this.card);
+          _this.card.position = _this.nbTotalCards;
         }
       }, false);
     }, touchDrop()
@@ -199,8 +200,8 @@ export default {
 <style scoped>
 .card-width
 {
-  width:  270px;
   height: 490px;
+  width:  270px;
 }
 
 img
