@@ -189,11 +189,6 @@ export default {
     {
       _this.card.isBack = isBack;
     });
-    this.socket.on('CARD_' + this.card.name + '_MOVED', card =>
-    {
-      // TODO: find another way to upd card (create error in explorer console)
-      _this.card = card;
-    });
   }, created()
   {
     this._initDragAndDropListeners();
