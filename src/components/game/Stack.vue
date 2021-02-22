@@ -47,6 +47,11 @@ export default {
     }, onCardClick()
     {
       this.$emit('onCardClick', this.currentCard);
+
+      if (this.cards.length - 1 === this.currentCardIndex)
+      {
+        this.currentCardIndex = 0;
+      }
     },
   },
 };
