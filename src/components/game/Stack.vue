@@ -1,19 +1,22 @@
 <template>
-  <div v-if="cards.length > 0" class="row justify-content-center">
-    <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
-      <b-icon-chevron-left/>
-    </b-button>
-    <Card v-b-tooltip.hover
-          :card="currentCard"
-          :draggable="false"
-          :return-allowed="false"
-          :scenario="scenario"
-          :socket="socket"
-          title="Ajouter sur la table"
-          @cardClicked="onCardClick"/>
-    <b-button v-b-tooltip.hover title="Carte suivante" variant="light" @click="next">
-      <b-icon-chevron-right/>
-    </b-button>
+  <div v-if="cards.length > 0" class="text-center">
+    <div class="row justify-content-center">
+      <b-button v-b-tooltip.hover title="Carte précédente" variant="light" @click="previous">
+        <b-icon-chevron-left/>
+      </b-button>
+      <Card v-b-tooltip.hover
+            :card="currentCard"
+            :draggable="false"
+            :return-allowed="false"
+            :scenario="scenario"
+            :socket="socket"
+            title="Poser la carte sur la table"
+            @cardClicked="onCardClick"/>
+      <b-button v-b-tooltip.hover title="Carte suivante" variant="light" @click="next">
+        <b-icon-chevron-right/>
+      </b-button>
+    </div>
+    <b-button class="add-to-board" @click="onCardClick">Poser la carte sur le plateau</b-button>
   </div>
   <div v-else>La {{ stackName }} est vide</div>
 </template>
@@ -58,5 +61,8 @@ export default {
 </script>
 
 <style scoped>
-
+.add-to-board
+{
+  margin-top: 10px;
+}
 </style>

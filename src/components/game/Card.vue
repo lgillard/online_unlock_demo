@@ -226,7 +226,8 @@ export default {
 <style scoped>
 .card-width
 {
-  width: 270px;
+  width:  270px;
+  height: 490px;
 }
 
 img
