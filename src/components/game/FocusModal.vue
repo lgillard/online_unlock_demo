@@ -68,14 +68,18 @@ export default {
   }, methods:  {
     rotate(direction)
     {
-      const multiplicator     = direction === 'left' ? 1 : - 1;
-      this.rotationInProgress = setInterval(() =>
-                                            {
-                                              this.rotation += 2 * multiplicator;
-                                            }, 50);
+      this.stopRotate();
+      const multiplicator      = direction === 'left' ? 1 : - 1;
+      this.rotationsInProgress = setInterval(() =>
+                                             {
+                                               this.rotation += 2 * multiplicator;
+                                             }, 50);
     }, stopRotate()
     {
-      clearInterval(this.rotationInProgress);
+      if (this.rotationsInProgress !== null)
+      {
+        clearInterval(this.rotationsInProgress);
+      }
     },
   }, mounted()
   {
