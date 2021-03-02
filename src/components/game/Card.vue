@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FocusModal :card="card" :scenario="scenario"/>
+    <FocusModal :card="card" :scenario="scenario" @backToPick="backToPick" @discard="discard" @returnCard="returnCard"/>
     <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
       <div :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
         <div v-b-tooltip.hover class="pointer icon" title="Observer la carte" @click="focus">
@@ -53,10 +53,10 @@ export default {
   }, computed: {
     height()
     {
-      return this.isTurned ? 270 : 450;
+      return this.isTurned ? 205 : 350;
     }, width()
     {
-      return this.isTurned ? 450 : 270;
+      return this.isTurned ? 350 : 205;
     }, src()
     {
       return './assets/gameList/' + this.scenario + '/' + (this.card.isBack ? this.backName : this.frontName);
@@ -71,8 +71,8 @@ export default {
       return (this.card.rotation % 180) !== 0;
     }, getWidthHeight()
     {
-      const height = this.height === 450 ? this.height + 40 : this.height;
-      const width  = this.width === 450 ? this.width + 40 : this.width;
+      const height = this.height === 350 ? this.height + 30 : this.height;
+      const width  = this.width === 350 ? this.width + 30 : this.width;
       return 'width:' + width + 'px; height: ' + height + 'px;';
     }, getXYStyle()
     {
@@ -87,7 +87,7 @@ export default {
       rotateStyle += '-o-transform: rotate(' + this.card.rotation + 'deg);';
       rotateStyle += '-ms-transform: rotate(' + this.card.rotation + 'deg);';
       rotateStyle += 'transform: rotate(' + this.card.rotation + 'deg);';
-      rotateStyle += (this.isTurned ? 'margin-top: -110px !important;' : '');
+      rotateStyle += (this.isTurned ? 'margin-top: -87px !important;' : '');
       return rotateStyle;
     },
   }, methods:  {
@@ -123,9 +123,8 @@ export default {
     {
       e.preventDefault();
       this.$emit('cardClicked');
-    }, returnCard(e)
+    }, returnCard()
     {
-      e.preventDefault();
       this.socket.emit('CARD_RETURNED', { name: this.card.name, isBack: !this.card.isBack });
     }, discard()
     {
@@ -212,8 +211,8 @@ export default {
 <style scoped>
 .card-width
 {
-  height: 490px;
-  width:  270px;
+  height: 380px;
+  width:  205px;
 }
 
 img
@@ -250,7 +249,7 @@ img
 {
   margin:   0;
   position: absolute;
-  right:    0;
+  right:    -10px;
   width:    fit-content;
 }
 

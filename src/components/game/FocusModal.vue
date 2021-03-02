@@ -22,6 +22,17 @@
           <b-icon-arrow-clockwise/>
         </div>
       </div>
+      <div class="h2 mb-2 d-flex justify-content-around mt-5">
+        <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="() => {this.$emit('returnCard')}">
+          <b-icon-front/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="() => {this.$emit('discard')}">
+          <b-icon-trash/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="() => {this.$emit('backToPick')}">
+          <b-icon-arrow-bar-up/>
+        </div>
+      </div>
     </div>
   </b-modal>
 </template>
