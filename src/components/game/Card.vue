@@ -1,36 +1,44 @@
 <template>
-  <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
-    <div :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
-      <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
-        <b-icon-front/>
+  <div>
+    <FocusModal :card="card" :scenario="scenario"/>
+    <div :style="getZIndex + getXYStyle" class="container p-0 m-0">
+      <div :style="displayToolBar ? 'd-flex' : ''" class="toolbar h2 mb-2 icon-container container">
+        <div v-b-tooltip.hover class="pointer icon" title="Observer la carte" @click="focus">
+          <b-icon-eye/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="returnCard">
+          <b-icon-front/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
+          <b-icon-arrow-clockwise/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
+          <b-icon-trash/>
+        </div>
+        <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
+          <b-icon-arrow-bar-up/>
+        </div>
       </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Tourner la carte à droite" @click="turnRight">
-        <b-icon-arrow-clockwise/>
+      <div :style="getWidthHeight">
+        <img :id="card.name"
+             :src="src"
+             :style="getRotation"
+             alt="Start card"
+             class="card-width grab m-0"
+             @click="click"
+             @touchend="touchEnd"
+             @touchmove="touchMove"
+             @touchstart="e => e.preventDefault"/>
       </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Défausser la carte" @click="discard">
-        <b-icon-trash/>
-      </div>
-      <div v-b-tooltip.hover class="pointer icon" title="Reposer la carte dans la pioche" @click="backToPick">
-        <b-icon-arrow-bar-up/>
-      </div>
-    </div>
-    <div :style="getWidthHeight">
-      <img :id="card.name"
-           :src="src"
-           :style="getRotation"
-           alt="Start card"
-           class="card-width grab m-0"
-           @click="click"
-           @touchend="touchEnd"
-           @touchmove="touchMove"
-           @touchstart="e => e.preventDefault"/>
     </div>
   </div>
 </template>
 
 <script>
+import FocusModal from '@/components/game/FocusModal';
+
 export default {
-  name:        'Card', props: {
+  name:        'Card', components: { FocusModal }, props: {
     nbTotalCards: { default: 1 }, socket: { required: true }, scenario: { default: 'demo' }, card: {
       default: () =>
                {
@@ -86,7 +94,7 @@ export default {
     click(event)
     {
       event.preventDefault();
-      this.returnCard(event);
+      this.focus(event);
     }, touchEnd(event)
     {
       event.preventDefault();
@@ -125,6 +133,10 @@ export default {
     }, backToPick()
     {
       this.socket.emit('CARD_FROM_BOARD_TO_PICK', this.card.name);
+    }, focus(e)
+    {
+      e.preventDefault();
+      this.$bvModal.show('focus-card-' + this.card.name + '-modal');
     }, _initDragAndDropListeners()
     {
       let cardDraggedId;
