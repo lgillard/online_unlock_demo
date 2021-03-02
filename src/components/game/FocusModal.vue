@@ -21,11 +21,6 @@
              @touchstart="rotate('left')">
           <b-icon-arrow-clockwise/>
         </div>
-        <div>
-          <div v-b-tooltip.hover class="pointer icon" title="Modifier la taille de la carte">
-            <b-icon-zoom-in/>
-          </div>
-        </div>
       </div>
       <div class="h2 mb-2 d-flex justify-content-around mt-5">
         <div v-b-tooltip.hover class="pointer icon" title="Retourner la carte" @click="() => {this.$emit('returnCard')}">
@@ -69,11 +64,6 @@ export default {
     }, getRotation()
     {
       return '-webkit-transform: rotate(' + this.rotation + 'deg);\n' + '  transform: rotate(' + this.rotation + 'deg);';
-    }, getWidthHeight()
-    {
-      const height = this.height === 350 ? this.height + 30 : this.height;
-      const width  = this.width === 350 ? this.width + 30 : this.width;
-      return 'width:' + width + 'px; height: ' + height + 'px;';
     },
   }, methods:  {
     rotate(direction)

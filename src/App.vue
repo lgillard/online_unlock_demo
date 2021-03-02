@@ -39,7 +39,7 @@ export default {
       displayGuide: true,
       guideType:    'WELCOME',
       scenario:     '',
-      socket:       io('http://localhost:3000/'),
+      socket:       io('https://catnip-jagged-catshark.glitch.me/'),
       pick:         { default: () => [] },
       board:        { default: () => [] },
       discard:      { default: () => [] },
