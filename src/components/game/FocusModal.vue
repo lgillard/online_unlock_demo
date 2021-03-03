@@ -1,7 +1,7 @@
 <template>
-  <b-modal :id="'focus-card-' + card.name + '-modal'" hide-footer size="lg">
+  <b-modal :id="'focus-card-' + card.name + '-modal'" hide-footer size="lg" title="Observation d'une carte">
     <div class="text-center">
-      <div class="d-flex justify-content-around mt-5">
+      <div class="d-flex justify-content-around mb-5">
         <b-button v-b-tooltip.hover
                   class="icon"
                   title="Tourner la carte à gauche"
@@ -19,13 +19,25 @@
         <div class="d-flex">
           <b-button variant="light">
             <div class="h5 mb-0">
-              <b-icon-zoom-out @mousedown="zoom('out')" @mouseout="stopZoom" @mouseup="stopZoom" @touchend="stopZoom" @touchout="stopZoom" @touchstart="zoom('out')"/>
+              <b-icon-zoom-out @click="() => {this.zoomValue -= 2}"
+                               @mousedown="zoom('out')"
+                               @mouseout="stopZoom"
+                               @mouseup="stopZoom"
+                               @touchend="stopZoom"
+                               @touchout="stopZoom"
+                               @touchstart="zoom('out')"/>
             </div>
           </b-button>
           <b-input v-model="zoomValue" :max="zoomMax" :min="zoomMin" class="m-auto" type="number"/>
           <b-button variant="light">
             <div class="h5 mb-0">
-              <b-icon-zoom-in @mousedown="zoom('in')" @mouseout="stopZoom" @mouseup="stopZoom" @touchend="stopZoom" @touchout="stopZoom" @touchstart="zoom('in')"/>
+              <b-icon-zoom-in @click="() => {this.zoomValue += 2}"
+                              @mousedown="zoom('in')"
+                              @mouseout="stopZoom"
+                              @mouseup="stopZoom"
+                              @touchend="stopZoom"
+                              @touchout="stopZoom"
+                              @touchstart="zoom('in')"/>
             </div>
           </b-button>
         </div>
