@@ -1,6 +1,5 @@
 <template>
-  <b-modal id="search-pick-modal" hide-footer>
-    <h2 class="text-center">Rechercher dans la pioche</h2>
+  <b-modal id="search-pick-modal" hide-footer title="Rechercher dans la pioche">
     <Pick :cards="cards" :scenario="scenario" :socket="socket"/>
   </b-modal>
 </template>

@@ -1,6 +1,5 @@
 <template>
-  <b-modal id="search-discard-modal" hide-footer>
-    <h2 class="text-center">Rechercher dans la défausse</h2>
+  <b-modal id="search-discard-modal" hide-footer title="Rechercher dans la défausse">
     <Discard :cards="cards" :scenario="scenario" :socket="socket"/>
   </b-modal>
 </template>
